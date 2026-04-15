@@ -1,0 +1,182 @@
+### 糖尿病患者支持平台 - API测试文件
+### 使用 VS Code REST Client 插件运行这些测试
+
+@baseUrl = http://localhost:3001/api
+@token = 
+
+### 健康检查
+GET http://localhost:3001/health
+
+### API文档
+GET http://localhost:3001/api-docs
+
+###############################################
+# 认证测试
+###############################################
+
+### 1. 用户注册
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123456!",
+  "firstName": "测试",
+  "lastName": "用户"
+}
+
+### 2. 用户登录（使用演示账号）
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "demo@example.com",
+  "password": "Demo123456!"
+}
+
+### 保存token（点击上面的请求发送后，token会自动保存）
+@token = {{login.response.body.data.token}}
+
+### 3. 获取当前用户信息
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+###############################################
+# 档案测试
+###############################################
+
+### 4. 获取我的档案
+GET {{baseUrl}}/profiles/me
+Authorization: Bearer {{token}}
+
+### 5. 创建档案
+POST {{baseUrl}}/profiles/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "firstName": "张",
+  "lastName": "三",
+  "dateOfBirth": "1980-01-01T00:00:00.000Z",
+  "gender": "male",
+  "phone": "1234567890",
+  "diabetesType": "type_2",
+  "diagnosisDate": "2020-01-01T00:00:00.000Z",
+  "hba1c": 7.5,
+  "fastingGlucose": 126,
+  "allergies": ["花生", "海鲜"],
+  "dietaryPrefs": ["低糖", "低盐"],
+  "activityLevel": "moderate"
+}
+
+### 6. 更新档案
+PUT {{baseUrl}}/profiles/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "firstName": "张",
+  "lastName": "三",
+  "dateOfBirth": "1980-01-01T00:00:00.000Z",
+  "gender": "male",
+  "phone": "1234567890",
+  "diabetesType": "type_2",
+  "diagnosisDate": "2020-01-01T00:00:00.000Z",
+  "hba1c": 7.2,
+  "fastingGlucose": 120,
+  "allergies": ["花生", "海鲜", "鸡蛋"],
+  "dietaryPrefs": ["低糖", "低盐", "素食"],
+  "activityLevel": "active"
+}
+
+###############################################
+# 膳食计划测试
+###############################################
+
+### 7. 生成膳食计划
+POST {{baseUrl}}/meal-plans/generate
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "duration": 7,
+  "caloriesTarget": 2000
+}
+
+### 8. 获取膳食计划列表
+GET {{baseUrl}}/meal-plans?limit=10&offset=0
+Authorization: Bearer {{token}}
+
+### 9. 获取特定膳食计划详情（替换ID）
+@mealPlanId = your-meal-plan-id-here
+GET {{baseUrl}}/meal-plans/{{mealPlanId}}
+Authorization: Bearer {{token}}
+
+###############################################
+# 产品搜索测试
+###############################################
+
+### 10. 搜索产品 - 二甲双胍
+GET {{baseUrl}}/products/search?q=二甲双胍&limit=20
+Authorization: Bearer {{token}}
+
+### 11. 搜索产品 - 维生素
+GET {{baseUrl}}/products/search?q=维生素&limit=20
+Authorization: Bearer {{token}}
+
+### 12. 搜索产品 - 按分类
+GET {{baseUrl}}/products/search?category=营养补充剂&limit=20
+Authorization: Bearer {{token}}
+
+### 13. 获取产品详情（替换ID）
+@productId = your-product-id-here
+GET {{baseUrl}}/products/{{productId}}
+Authorization: Bearer {{token}}
+
+###############################################
+# 错误处理测试
+###############################################
+
+### 14. 测试错误的登录凭据
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "demo@example.com",
+  "password": "wrongpassword"
+}
+
+### 15. 测试未授权访问
+GET {{baseUrl}}/profiles/me
+
+### 16. 测试重复注册
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "demo@example.com",
+  "password": "Demo123456!",
+  "firstName": "重复",
+  "lastName": "用户"
+}
+
+### 17. 测试无效的输入验证
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "invalid-email",
+  "password": "123",
+  "firstName": "",
+  "lastName": ""
+}
+
+###############################################
+# 性能测试
+###############################################
+
+### 18. 批量搜索测试（发送多次）
+GET {{baseUrl}}/products/search?q=药&limit=50
+Authorization: Bearer {{token}}
+

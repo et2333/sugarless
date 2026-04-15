@@ -1,0 +1,127 @@
+### B2: OTC与补充剂推荐API测试
+
+@baseUrl = http://localhost:3001/api
+@token = 你的JWT Token
+
+### 1. 生成个性化推荐（通用）
+POST {{baseUrl}}/recommendations/generate
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{}
+
+###
+
+### 2. 生成个性化推荐（血糖控制焦点）
+POST {{baseUrl}}/recommendations/generate
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "focus": "blood_sugar"
+}
+
+###
+
+### 3. 生成个性化推荐（体重管理焦点）
+POST {{baseUrl}}/recommendations/generate
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "focus": "weight"
+}
+
+###
+
+### 4. 获取用户推荐历史
+GET {{baseUrl}}/recommendations?limit=10
+Authorization: Bearer {{token}}
+
+###
+
+### 5. 获取推荐详情
+@recommendationId = 推荐ID
+GET {{baseUrl}}/recommendations/{{recommendationId}}
+Authorization: Bearer {{token}}
+
+###
+
+### 6. 提交推荐反馈
+POST {{baseUrl}}/recommendations/{{recommendationId}}/feedback
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rating": 5,
+  "accepted": true,
+  "comment": "推荐很有帮助，我会考虑使用维生素D3"
+}
+
+###
+
+### 7. 搜索补充剂
+GET {{baseUrl}}/recommendations/supplements/search?query=维生素
+Authorization: Bearer {{token}}
+
+###
+
+### 8. 按分类搜索补充剂
+GET {{baseUrl}}/recommendations/supplements/search?category=血糖控制
+Authorization: Bearer {{token}}
+
+###
+
+### 9. 获取所有补充剂分类
+GET {{baseUrl}}/recommendations/supplements/categories
+Authorization: Bearer {{token}}
+
+###
+
+### 10. 获取补充剂详情
+@supplementId = 补充剂ID
+GET {{baseUrl}}/recommendations/supplements/{{supplementId}}
+Authorization: Bearer {{token}}
+
+###
+
+### 11. 添加到关注列表
+POST {{baseUrl}}/recommendations/watchlist
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "supplementId": "补充剂ID",
+  "notes": "我想了解更多关于这个补充剂的信息",
+  "targetPrice": 15.00
+}
+
+###
+
+### 12. 获取关注列表
+GET {{baseUrl}}/recommendations/watchlist/items
+Authorization: Bearer {{token}}
+
+###
+
+### 13. 从关注列表移除
+DELETE {{baseUrl}}/recommendations/watchlist/{{supplementId}}
+Authorization: Bearer {{token}}
+
+###
+
+### 完整测试流程
+# 1. 首先登录获取token
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+# 2. 生成推荐
+# 3. 查看推荐详情
+# 4. 添加到关注列表
+# 5. 提交反馈
+

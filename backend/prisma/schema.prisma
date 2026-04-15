@@ -1,0 +1,1221 @@
+// Prisma Schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  passwordHash  String
+  role          String   @default("user") // user, merchant, admin
+  status        String   @default("active")
+  emailVerified Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // 关系
+  profile       Profile?
+  mealPlans     MealPlan[]
+  medications   Medication[]
+  refillAlerts  RefillAlert[]
+  reminders     Reminder[]
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+  shoppingLists ShoppingList[]
+  orders        Order[]
+  recommendations Recommendation[]
+  supplementWatchlist SupplementWatchlist[]
+  reminderResponses ReminderResponse[]
+  reminderOptimizationSuggestions ReminderOptimizationSuggestion[]
+  medicationInventories MedicationInventory[]
+
+  // 新增关系
+  bloodSugarRecords BloodSugarRecord[]
+  bloodSugarInsights BloodSugarInsight[]
+  bloodSugarAlerts BloodSugarAlert[]
+  chatSessions ChatSession[]
+  chatMessages ChatMessage[]
+  notificationChannels NotificationChannel[]
+  notifications Notification[]
+  doctorProfile DoctorProfile?
+  consultations Consultation[] @relation("PatientConsultations")
+  agentLogs AgentLog[]
+  paymentIntents PaymentIntent[]
+  calendarCredentials CalendarCredentials[]
+  calendarEvents CalendarEvent[]
+  verificationTokens EmailVerificationToken[]
+
+  @@map("users")
+}
+
+// 用户档案
+model Profile {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  version   Int      @default(1)
+  
+  // 基本信息
+  firstName     String
+  lastName      String
+  dateOfBirth   DateTime
+  gender        String
+  phone         String?
+  
+  // 医疗信息（JSON存储）
+  diabetesType  String?  // type_1, type_2, gestational
+  diagnosisDate DateTime?
+  hba1c         Float?
+  fastingGlucose Float?
+  
+  // 饮食限制（JSON数组）
+  allergies     String   @default("[]") // JSON array
+  dietaryPrefs  String   @default("[]") // JSON array
+  
+  // 生活方式
+  activityLevel String   @default("moderate")
+  
+  // 头像
+  avatarId      String?  @default("avatar1")
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("profiles")
+}
+
+// 邮箱验证令牌
+model EmailVerificationToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("email_verification_tokens")
+}
+
+// 膳食计划
+model MealPlan {
+  id          String   @id @default(uuid())
+  userId      String
+  planDate    DateTime
+  duration    Int      // 天数
+  
+  // 膳食详情（JSON存储）
+  meals       String   // JSON: { day1: { breakfast: {...}, lunch: {...}, dinner: {...} } }
+  
+  // 营养目标
+  caloriesTarget Int
+  carbsMin       Int
+  carbsMax       Int
+  proteinMin     Int
+  proteinMax     Int
+  
+  generatedBy String   @default("system")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // 关系
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("meal_plans")
+}
+
+// 食谱
+model Recipe {
+  id          String   @id @default(uuid())
+  name        String
+  nameEn      String?
+  description String
+  
+  // 食材（JSON）
+  ingredients String   // JSON array
+  
+  // 营养信息
+  calories    Int
+  carbs       Int
+  protein     Int
+  fat         Int
+  fiber       Int
+  
+  // 适用性
+  diabetesTypes String @default("[]") // JSON array
+  
+  prepTime    Int      // 分钟
+  cookTime    Int
+  servings    Int      @default(1)
+  
+  imageUrl    String?
+  category    String   // breakfast, lunch, dinner, snack
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("recipes")
+}
+
+// 产品（模拟搜索数据）
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  // English display fields (optional for bilingual support)
+  nameEn      String?
+  brand       String?
+  category    String
+  
+  // 规格
+  dosage      String?
+  quantity    Int?
+  unit        String?
+  
+  // 价格
+  price       Float
+  vendor      String   @default("demo_vendor")
+  inStock     Boolean  @default(true)
+  stockQuantity Int?   @default(100)  // 库存数量
+  
+  // 处方药标记
+  prescriptionRequired Boolean @default(false)
+  
+  description String?
+  // English description (optional)
+  descriptionEn String?
+  imageUrl    String?
+  
+  // 糖尿病相关性评分 (0-1)
+  diabetesRelevance Float? @default(0.5)
+  
+  createdAt   DateTime @default(now())
+  
+  // 关系
+  inventory   Inventory?
+  
+  @@map("products")
+}
+
+// 药物管理
+model Medication {
+  id        String   @id @default(uuid())
+  userId    String
+  
+  // 药物信息
+  name            String
+  genericName     String?
+  brand           String?
+  dosage          String      // "500mg"
+  form            String      // tablet, capsule, liquid, injection
+  
+  // 用法用量
+  prescribedDose  Int         // 每次剂量
+  frequency       String      // "twice_daily", "three_times_daily"
+  timings         String      // JSON: ["08:00", "20:00"]
+  
+  // 库存管理
+  currentQuantity Int
+  refillThreshold Int         @default(7) // 剩余天数低于此值时提醒
+  
+  // 处方信息
+  prescribedBy    String?
+  prescriptionDate DateTime?
+  validUntil      DateTime?
+  
+  isActive        Boolean  @default(true)
+  startDate       DateTime @default(now())
+  endDate         DateTime?
+  
+  notes           String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // 关系
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refillAlerts    RefillAlert[]
+  // inventory linkage (optional, new inventory system)
+  inventoryItems MedicationInventory[]
+  
+  @@map("medications")
+}
+
+// Medication Inventory (enhanced)
+model MedicationInventory {
+  id               String   @id @default(uuid())
+  userId           String
+
+  // Basic info
+  medicationName   String
+  dosageStrength   String?
+  form             String?
+
+  // Inventory
+  initialQuantity  Int
+  currentQuantity  Float
+  quantityUnit     String?
+
+  // Dosage usage
+  dosagePerTime    Int
+  timesPerDay      Int
+  dosageTimes      String   // JSON array of HH:mm strings
+
+  // Computed helpers (stored as values)
+  dailyConsumption Float?
+  daysRemaining    Int?
+  expectedEmptyDate DateTime?
+
+  // Reminders linkage
+  autoReminderEnabled Boolean @default(true)
+  reminderIds      String?  // JSON array of reminder IDs
+  lowStockThreshold Int     @default(10)
+
+  status           String   @default("active") // active/low_stock/empty/paused
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  medication       Medication? @relation(fields: [medicationId], references: [id])
+  medicationId     String?
+  consumptionLogs  MedicationConsumptionLog[]
+  refillLogs       MedicationRefillLog[]
+}
+
+model MedicationConsumptionLog {
+  id                 String   @id @default(uuid())
+  medicationInventoryId String
+  reminderId         String?
+  consumedQuantity   Float
+  consumptionTime    DateTime
+  remainingQuantity  Float
+  consumptionType    String? // reminder_complete/manual_adjust/refill
+  notes              String?
+  createdAt          DateTime @default(now())
+
+  medicationInventory MedicationInventory @relation(fields: [medicationInventoryId], references: [id], onDelete: Cascade)
+}
+
+model MedicationRefillLog {
+  id                 String   @id @default(uuid())
+  medicationInventoryId String
+  refillQuantity     Int
+  refillDate         DateTime
+  pharmacy           String?
+  prescriptionNumber String?
+  cost               Float?
+  notes              String?
+  createdAt          DateTime @default(now())
+
+  medicationInventory MedicationInventory @relation(fields: [medicationInventoryId], references: [id], onDelete: Cascade)
+}
+
+// 补充提醒
+model RefillAlert {
+  id            String   @id @default(uuid())
+  userId        String
+  medicationId  String
+  
+  alertType     String   // low_stock, out_of_stock
+  priority      String   // low, medium, high, urgent
+  
+  daysRemaining Int
+  estimatedRunOutDate DateTime
+  
+  status        String   @default("pending") // pending, acknowledged, dismissed
+  
+  createdAt     DateTime @default(now())
+  acknowledgedAt DateTime?
+  
+  // 关系
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  medication    Medication  @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+  
+  @@map("refill_alerts")
+}
+
+// 智能提醒
+model Reminder {
+  id        String   @id @default(uuid())
+  userId    String
+  
+  type      String   // medication, glucose_check, meal, exercise, appointment, review
+  title     String
+  message   String
+  priority  String   @default("medium") // low, medium, high
+  
+  // 调度设置
+  scheduleType  String   // once, daily, weekly, custom
+  scheduleTime  String   // "08:00"
+  daysOfWeek    String   @default("[]") // JSON: [1,2,3,4,5]
+  
+  startDate     DateTime
+  endDate       DateTime?
+  
+  // 关联
+  relatedId     String?  // 关联的medication/appointment ID
+  
+  // 反馈跟踪
+  noResponseCount Int @default(0) // 连续没有反馈的次数
+  lastRemindedAt DateTime? // 最后提醒时间
+  
+  isActive      Boolean  @default(true)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  completions   ReminderCompletion[]
+  responses     ReminderResponse[]
+  optimizationSuggestions ReminderOptimizationSuggestion[]
+  adaptations   ReminderAdaptationHistory[]
+  
+  @@map("reminders")
+}
+
+// 提醒完成记录
+model ReminderCompletion {
+  id          String   @id @default(uuid())
+  reminderId  String
+  
+  completedAt DateTime @default(now())
+  skipped     Boolean  @default(false)
+  note        String?
+  
+  // 关系
+  reminder    Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  
+  @@map("reminder_completions")
+}
+
+// 提醒响应记录（用于AI学习）
+model ReminderResponse {
+  id                 String   @id @default(uuid())
+  reminderId         String
+  userId             String
+
+  scheduledTime      DateTime
+  actualResponseTime DateTime?
+
+  action             String   // complete/snooze/dismiss/ignore
+  snoozeDuration     Int?
+  snoozeCount        Int      @default(0)
+
+  responseDelay      Int?     // minutes
+  dayOfWeek          Int?
+  isWeekend          Boolean? 
+
+  createdAt          DateTime @default(now())
+
+  reminder           Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([reminderId, userId])
+  @@index([action])
+  @@map("reminder_responses")
+}
+
+// AI 提醒优化建议
+model ReminderOptimizationSuggestion {
+  id                     String   @id @default(uuid())
+  reminderId             String
+  userId                 String
+
+  currentTime            String   // HH:mm
+  suggestedTime          String   // HH:mm
+  confidenceScore        Float?
+
+  analysisPeriodDays     Int      @default(30)
+  totalSnoozes           Int?
+  avgSnoozeMinutes       Int?
+  mostCommonActualTime   String?
+
+  suggestionReason       String?
+  patternDetected        String?
+
+  suggestionStatus       String   @default("pending") // pending/accepted/rejected/auto_applied
+  userResponseAt         DateTime?
+
+  createdAt              DateTime @default(now())
+
+  reminder               Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([suggestionStatus])
+  @@map("reminder_optimization_suggestions")
+}
+
+// 提醒时间自适应历史
+model ReminderAdaptationHistory {
+  id                String   @id @default(uuid())
+  reminderId        String
+
+  oldTime           String
+  newTime           String
+  changeReason      String?
+
+  beforeSnoozeRate  Float?  // 0-1
+  afterSnoozeRate   Float?
+
+  appliedAt         DateTime @default(now())
+
+  reminder          Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+
+  @@map("reminder_adaptation_history")
+}
+
+// 社区帖子
+model Post {
+  id          String   @id @default(uuid())
+  userId      String
+  authorName  String   // 可以是匿名或真实姓名
+  
+  // 内容
+  type        String   // story, question, tip, achievement
+  title       String
+  content     String
+  tags        String   @default("[]") // JSON array of tags
+  
+  // 互动
+  likesCount    Int      @default(0)
+  commentsCount Int      @default(0)
+  
+  // 状态
+  isPublished Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // 关系
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  likes       Like[]
+  
+  @@map("posts")
+}
+
+// 评论
+model Comment {
+  id         String   @id @default(uuid())
+  postId     String
+  userId     String
+  authorName String
+  content    String
+  
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  // 关系
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("comments")
+}
+
+// 点赞
+model Like {
+  id        String   @id @default(uuid())
+  postId    String
+  userId    String
+  
+  createdAt DateTime @default(now())
+  
+  // 关系
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // 确保同一用户只能对同一帖子点赞一次
+  @@unique([postId, userId])
+  @@map("likes")
+}
+
+// ==================== 电商模块 ====================
+
+// 购物清单
+model ShoppingList {
+  id            String   @id @default(uuid())
+  userId        String
+  mealPlanId    String?  // 关联的膳食计划（可选）
+  
+  name          String   @default("我的购物清单")
+  status        String   @default("active") // active, completed, cancelled
+  
+  items         String   // JSON: ShoppingItem[]
+  estimatedCost Float    @default(0)
+  currency      String   @default("AUD")
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders        Order[]
+  
+  @@map("shopping_lists")
+}
+
+// 订单
+model Order {
+  id              String   @id @default(uuid())
+  orderNumber     String   @unique // 订单号
+  userId          String
+  shoppingListId  String?
+  mealPlanId      String?
+  
+  // 订单基本信息
+  status          String   // pending, confirmed, processing, shipped, delivered, cancelled
+  paymentStatus   String   @default("pending") // pending, paid, failed, refunded
+  
+  // 子订单（按供应商分组）
+  subOrders       String   // JSON: SubOrder[]
+  
+  // 金额
+  totalAmount     Float
+  shippingCost    Float    @default(0)
+  taxAmount       Float    @default(0)
+  finalAmount     Float
+  currency        String   @default("AUD")
+  
+  // 配送信息
+  deliveryAddress String   // JSON: Address
+  deliveryMethod  String   @default("standard") // standard, express, pickup
+  estimatedDelivery DateTime?
+  actualDelivery    DateTime?
+  
+  // 备注
+  note            String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // 关系
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shoppingList    ShoppingList? @relation(fields: [shoppingListId], references: [id])
+  shipments       Shipment[]
+  paymentIntent   PaymentIntent?
+  
+  @@map("orders")
+}
+
+// 库存
+model Inventory {
+  id          String   @id @default(uuid())
+  productId   String   @unique // 关联Product表
+  
+  sku         String   @unique
+  quantity    Int      @default(0)
+  reserved    Int      @default(0) // 已预留数量
+  available   Int      @default(0) // 可用数量 = quantity - reserved
+  
+  // 库存位置
+  warehouse   String   @default("main")
+  location    String?  // 库位号
+  
+  // 库存阈值
+  lowStockThreshold  Int @default(10)
+  reorderPoint       Int @default(20)
+  reorderQuantity    Int @default(50)
+  
+  // 状态
+  status      String   @default("active") // active, discontinued
+  
+  lastRestockDate DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // 关系
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  stockLedgers StockLedger[]
+  
+  @@map("inventory")
+}
+
+// 库存流水
+model StockLedger {
+  id          String   @id @default(uuid())
+  inventoryId String
+  productId   String
+  
+  // 变动信息
+  type        String   // in, out, adjust, reserve, release
+  quantity    Int      // 正数为增加，负数为减少
+  
+  // 关联
+  referenceType String? // order, return, adjustment
+  referenceId   String?
+  
+  // 库存快照
+  beforeQty   Int
+  afterQty    Int
+  
+  reason      String?
+  operator    String?  // 操作人
+  
+  createdAt   DateTime @default(now())
+  
+  // 关系
+  inventory   Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  
+  @@map("stock_ledgers")
+}
+
+// 发货/物流
+model Shipment {
+  id            String   @id @default(uuid())
+  orderId       String
+  orderNumber   String
+  
+  // 物流信息
+  carrier       String   // Australia Post, StarTrack, DHL, etc.
+  service       String   // standard, express
+  trackingNumber String  @unique
+  trackingUrl   String?
+  
+  // 包裹信息
+  packages      String   // JSON: PackageInfo[]
+  
+  // 地址
+  origin        String   // JSON: Address
+  destination   String   // JSON: Address
+  
+  // 状态
+  status        String   // created, in_transit, out_for_delivery, delivered, failed
+  statusHistory String   // JSON: StatusHistory[]
+  
+  // 费用
+  shippingCost  Float
+  
+  // 时间
+  estimatedDelivery DateTime?
+  actualDelivery    DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 关系
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  @@map("shipments")
+}
+
+// ==================== B2: OTC与补充剂推荐模块 ====================
+
+// 补充剂信息
+model Supplement {
+  id          String   @id @default(uuid())
+  
+  // 基本信息
+  name        String   // "维生素D3", "Omega-3鱼油"
+  nameEn      String?
+  type        String   // vitamin, mineral, herbal, amino_acid, other
+  category    String   // 血糖控制、心血管健康、神经保护等
+  
+  // 成分信息（JSON）
+  activeIngredients String // [{ name: "维生素D3", amount: 1000, unit: "IU" }]
+  
+  // 功效
+  benefits    String   // JSON array: ["改善血糖控制", "增强免疫力"]
+  indications String   // JSON array: ["1型糖尿病", "2型糖尿病"]
+  
+  // 适用人群（JSON）
+  suitableFor String   // { diabetesType: ["type_1", "type_2"], ageMin: 18, ageMax: 80 }
+  
+  // 禁忌症
+  contraindications String @default("[]") // JSON array
+  
+  // 用法用量（JSON）
+  dosage      String   // { amount: 1, unit: "capsule", frequency: "daily", timing: "with_meal" }
+  
+  // 副作用（JSON）
+  sideEffects String   @default("{}") // { common: [], rare: [] }
+  
+  // 循证医学证据
+  evidenceLevel String @default("C") // A, B, C, D
+  evidenceSources String @default("[]") // JSON array of study references
+  
+  // 预期影响（JSON）
+  expectedImpact String // { hba1c: -0.3, glucose: -15, timeframe: 90 }
+  
+  // 价格信息
+  averagePrice Float?
+  
+  // 产品信息
+  imageUrl    String?
+  productUrl  String?
+  
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // 关系
+  recommendations RecommendationItem[]
+  
+  @@map("supplements")
+}
+
+// 推荐记录
+model Recommendation {
+  id          String   @id @default(uuid())
+  userId      String
+  
+  // 推荐类型
+  focus       String?  // blood_sugar, weight, energy, general
+  
+  // 推荐项
+  items       RecommendationItem[]
+  
+  // 推荐原因
+  rationale   String?  // AI生成的推荐理由
+  aiModel     String?  // 使用的AI模型
+  confidence  Float?   // 0-1的置信度
+  
+  // 用户反馈
+  feedback    String?  // JSON: { rating: 5, accepted: true, comment: "..." }
+  
+  // 状态
+  status      String   @default("active") // active, archived
+  
+  generatedAt DateTime @default(now())
+  viewedAt    DateTime?
+  
+  // 关系
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("recommendations")
+}
+
+// 推荐项（关联表）
+model RecommendationItem {
+  id              String   @id @default(uuid())
+  recommendationId String
+  supplementId    String
+  
+  // 推荐信息
+  rank            Int      // 推荐排序
+  strength        String   // strong, moderate, weak
+  reasons         String   // JSON array: ["您的HbA1c偏高", "维生素D有助于改善胰岛素敏感性"]
+  
+  // 影响分析（JSON）
+  expectedImpact  String   // 详细的影响数据
+  
+  // 循证信息
+  evidenceLevel   String   // A, B, C, D
+  evidenceSources String   @default("[]") // JSON array
+  
+  // 相互作用警告（JSON）
+  interactions    String   @default("[]") // [{ drug: "二甲双胍", severity: "mild", description: "..." }]
+  
+  // 价格信息（JSON）
+  pricing         String?  // { averagePrice: 29.99, lowestPrice: 24.99, vendor: "Chemist Warehouse" }
+  
+  // 评分
+  relevanceScore  Float    @default(0) // 0-1的相关性分数
+  
+  createdAt       DateTime @default(now())
+  
+  // 关系
+  recommendation  Recommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
+  supplement      Supplement     @relation(fields: [supplementId], references: [id])
+  
+  @@map("recommendation_items")
+}
+
+// 用户关注的补充剂
+model SupplementWatchlist {
+  id           String   @id @default(uuid())
+  userId       String
+  supplementId String
+  
+  // 关注原因
+  notes        String?
+  
+  // 价格预警
+  targetPrice  Float?
+  notifyOnPrice Boolean @default(false)
+  
+  addedAt      DateTime @default(now())
+  
+  // 关系
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, supplementId])
+  @@map("supplement_watchlist")
+}
+
+// ==================== 血糖跟踪模块 ====================
+
+// 血糖记录
+model BloodSugarRecord {
+  id              String   @id @default(uuid())
+  userId          String
+  value           Float    // mg/dL
+  unit            String   @default("mg/dL") // mg/dL, mmol/L
+  type            String   // fasting, post_prandial, random, hba1c
+  measurementTime DateTime
+  
+  // 餐食上下文
+  mealContext     String?  // JSON: { mealType, timeFromMeal, mealSize, mealCarbs }
+  symptoms        String?  // JSON array
+  notes           String?
+  
+  // 设备信息
+  device          String?  // JSON: { type, model, serialNumber }
+  location        String?
+  tags            String?  // JSON array
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // 关系
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  insights        BloodSugarInsight[]
+  alerts          BloodSugarAlert[]
+  
+  @@map("blood_sugar_records")
+}
+
+// 血糖洞察
+model BloodSugarInsight {
+  id             String   @id @default(uuid())
+  userId         String
+  recordId       String?
+  
+  type           String   // high, low, trend, pattern, recommendation
+  severity       String   // low, medium, high, critical
+  message        String
+  recommendation String?
+  confidence     Float    @default(0.0)
+  data           String?  // JSON
+  
+  timestamp      DateTime @default(now())
+  
+  // 关系
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  record         BloodSugarRecord? @relation(fields: [recordId], references: [id])
+  
+  @@map("blood_sugar_insights")
+}
+
+// 血糖警报
+model BloodSugarAlert {
+  id            String   @id @default(uuid())
+  userId        String
+  recordId      String?
+  
+  type          String   // high_glucose, low_glucose, rapid_change, pattern_anomaly
+  severity      String   // low, medium, high, critical
+  message       String
+  value         Float?
+  threshold     Float?
+  actions       String?  // JSON array
+  
+  timestamp     DateTime @default(now())
+  acknowledged  Boolean  @default(false)
+  acknowledgedAt DateTime?
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  record        BloodSugarRecord? @relation(fields: [recordId], references: [id])
+  
+  @@map("blood_sugar_alerts")
+}
+
+// ==================== 实时聊天模块 ====================
+
+// 聊天会话
+model ChatSession {
+  id            String   @id @default(uuid())
+  userId        String
+  sessionType   String   // consultation, support, general
+  title         String?
+  status        String   @default("active") // active, closed, archived
+  
+  // 参与者
+  participants  String   // JSON array of user IDs
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  closedAt      DateTime?
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages      ChatMessage[]
+  
+  @@map("chat_sessions")
+}
+
+// 聊天消息
+model ChatMessage {
+  id            String   @id @default(uuid())
+  sessionId     String
+  senderId      String
+  senderName    String
+  
+  content       String
+  messageType   String   @default("text") // text, image, file, system
+  metadata      String?  // JSON
+  
+  // 消息状态
+  isRead        Boolean  @default(false)
+  readAt        DateTime?
+  isEdited      Boolean  @default(false)
+  editedAt      DateTime?
+  
+  // 回复引用
+  replyToId     String?
+  
+  createdAt     DateTime @default(now())
+  
+  // 关系
+  session       ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sender        User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  replyTo       ChatMessage? @relation("MessageReply", fields: [replyToId], references: [id])
+  replies       ChatMessage[] @relation("MessageReply")
+  
+  @@map("chat_messages")
+}
+
+// ==================== 通知系统 ====================
+
+// 通知渠道
+model NotificationChannel {
+  id            String   @id @default(uuid())
+  userId        String
+  
+  type          String   // email, sms, push, in_app
+  address       String   // email, phone, device token
+  isActive      Boolean  @default(true)
+  preferences   String?  // JSON
+  
+  verified      Boolean  @default(false)
+  verifiedAt    DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notifications Notification[]
+  
+  @@map("notification_channels")
+}
+
+// 通知记录
+model Notification {
+  id            String   @id @default(uuid())
+  userId        String
+  channelId     String
+  
+  type          String   // reminder, alert, update, marketing
+  title         String
+  content       String
+  priority      String   @default("medium") // low, medium, high, urgent
+  
+  // 状态跟踪
+  status        String   @default("pending") // pending, sent, delivered, read, failed
+  sentAt        DateTime?
+  deliveredAt   DateTime?
+  readAt        DateTime?
+  failedAt      DateTime?
+  failureReason String?
+  
+  // 元数据
+  metadata      String?  // JSON
+  actionUrl     String?
+  
+  createdAt     DateTime @default(now())
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel       NotificationChannel @relation(fields: [channelId], references: [id])
+  
+  @@map("notifications")
+}
+
+// ==================== 日历集成模块 ====================
+
+// 日历凭据
+model CalendarCredentials {
+  id            String   @id @default(uuid())
+  userId        String
+  calendarType  String   // google, outlook, apple
+  accessToken   String
+  refreshToken  String?
+  expiresAt     DateTime?
+  calendarId    String?  // 特定日历ID
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, calendarType])
+  @@map("calendar_credentials")
+}
+
+// 日历事件
+model CalendarEvent {
+  id            String   @id @default(uuid())
+  userId        String
+  externalId    String?  // 外部日历系统的事件ID
+  
+  title         String
+  description   String?
+  startTime     DateTime
+  endTime       DateTime
+  location      String?
+  attendees     String?  // JSON array
+  reminders     String?  // JSON array
+  recurrence    String?  // JSON object
+  
+  source        String   // google, outlook, apple, local
+  isAllDay      Boolean  @default(false)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, externalId])
+  @@map("calendar_events")
+}
+
+// ==================== 医生管理模块 ====================
+
+// 医生档案
+model DoctorProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  
+  // 专业信息
+  licenseNumber String
+  specialization String
+  qualifications String? // JSON array
+  experience    Int      // years
+  
+  // 执业信息
+  clinicName    String?
+  clinicAddress String?
+  phone         String?
+  email         String?
+  
+  // 服务信息
+  consultationFee Float?
+  availableSlots  String? // JSON array
+  languages       String? // JSON array
+  
+  // 状态
+  isActive      Boolean  @default(true)
+  isVerified    Boolean  @default(false)
+  verifiedAt    DateTime?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  consultations Consultation[]
+  
+  @@map("doctor_profiles")
+}
+
+// 咨询预约
+model Consultation {
+  id            String   @id @default(uuid())
+  patientId     String
+  doctorId      String
+  
+  type          String   // video, phone, in_person
+  status        String   @default("scheduled") // scheduled, confirmed, in_progress, completed, cancelled
+  
+  scheduledAt   DateTime
+  duration      Int      @default(30) // minutes
+  actualStartAt DateTime?
+  actualEndAt   DateTime?
+  
+  // 咨询内容
+  reason        String?
+  symptoms      String?  // JSON array
+  medications   String?  // JSON array
+  notes         String?
+  prescription  String?  // JSON
+  
+  // 费用
+  fee           Float?
+  paymentStatus String   @default("pending") // pending, paid, refunded
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // 关系
+  patient       User     @relation("PatientConsultations", fields: [patientId], references: [id])
+  doctor        DoctorProfile @relation(fields: [doctorId], references: [id])
+  
+  @@map("consultations")
+}
+
+// ==================== 智能体日志 ====================
+
+// 智能体活动日志
+model AgentLog {
+  id            String   @id @default(uuid())
+  agentType     String   // DietAgent, RecommendationAgent, etc.
+  userId        String
+  sessionId     String
+  
+  action        String
+  details       String   // JSON
+  result        String?  // JSON
+  
+  timestamp     DateTime @default(now())
+  
+  // 关系
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("agent_logs")
+}
+
+// ==================== 支付系统模块 ====================
+
+// 支付意图
+model PaymentIntent {
+  id            String   @id @default(uuid())
+  orderId       String   @unique
+  userId        String
+  
+  amount        Float
+  currency      String   @default("AUD")
+  status        String   @default("pending") // pending, succeeded, failed, cancelled
+  
+  clientSecret  String
+  
+  // Stripe相关
+  stripeId      String   @unique
+  paymentMethod String?
+  
+  // 时间戳
+  createdAt     DateTime @default(now())
+  confirmedAt   DateTime?
+  failedAt      DateTime?
+  cancelledAt   DateTime?
+  
+  // 关系
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("payment_intents")
+}
+

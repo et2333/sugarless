@@ -1,0 +1,153 @@
+### B1模块 - 自然语言查询和价格比较API测试
+
+# 基础URL
+@baseUrl = http://localhost:3000/api
+
+### ============================================
+### 1. 自然语言查询测试
+### ============================================
+
+### 测试1: 搜索降血糖药物
+GET {{baseUrl}}/products/nlq-search?q=我需要降血糖的药
+Content-Type: application/json
+
+### 测试2: 搜索便宜的维生素
+GET {{baseUrl}}/products/nlq-search?q=便宜的维生素D
+Content-Type: application/json
+
+### 测试3: 搜索糖尿病相关补充剂
+GET {{baseUrl}}/products/nlq-search?q=适合糖尿病患者的补充剂
+Content-Type: application/json
+
+### 测试4: 搜索血糖仪和试纸
+GET {{baseUrl}}/products/nlq-search?q=血糖仪试纸
+Content-Type: application/json
+
+### 测试5: 搜索二甲双胍（药物名称）
+GET {{baseUrl}}/products/nlq-search?q=二甲双胍
+Content-Type: application/json
+
+### 测试6: 搜索鱼油补充剂
+GET {{baseUrl}}/products/nlq-search?q=omega-3鱼油
+Content-Type: application/json
+
+### 测试7: 搜索血糖监测器械
+GET {{baseUrl}}/products/nlq-search?q=血糖监测
+Content-Type: application/json
+
+### ============================================
+### 2. 价格比较测试
+### ============================================
+
+### 测试8: 比较二甲双胍价格
+GET {{baseUrl}}/products/compare-prices?q=二甲双胍
+Content-Type: application/json
+
+### 测试9: 比较维生素D3价格
+GET {{baseUrl}}/products/compare-prices?q=维生素D3
+Content-Type: application/json
+
+### 测试10: 比较血糖仪试纸价格
+GET {{baseUrl}}/products/compare-prices?q=血糖仪试纸
+Content-Type: application/json
+
+### 测试11: 比较Omega-3鱼油价格
+GET {{baseUrl}}/products/compare-prices?q=鱼油
+Content-Type: application/json
+
+### 测试12: 比较采血针价格
+GET {{baseUrl}}/products/compare-prices?q=采血针
+Content-Type: application/json
+
+### 测试13: 比较胰岛素注射笔针头价格
+GET {{baseUrl}}/products/compare-prices?q=胰岛素注射笔针头
+Content-Type: application/json
+
+### 测试14: 比较镁补充剂价格
+GET {{baseUrl}}/products/compare-prices?q=镁补充剂
+Content-Type: application/json
+
+### ============================================
+### 3. 搜索建议测试
+### ============================================
+
+### 测试15: 获取"二"开头的搜索建议
+GET {{baseUrl}}/products/suggestions?q=二
+Content-Type: application/json
+
+### 测试16: 获取"血糖"开头的搜索建议
+GET {{baseUrl}}/products/suggestions?q=血糖
+Content-Type: application/json
+
+### 测试17: 获取"维生素"开头的搜索建议
+GET {{baseUrl}}/products/suggestions?q=维生素
+Content-Type: application/json
+
+### ============================================
+### 4. 传统搜索测试（对比）
+### ============================================
+
+### 测试18: 传统关键词搜索 - 二甲双胍
+GET {{baseUrl}}/products/search?q=二甲双胍
+Content-Type: application/json
+
+### 测试19: 传统关键词搜索 - 维生素
+GET {{baseUrl}}/products/search?q=维生素
+Content-Type: application/json
+
+### ============================================
+### 5. 分类查询测试
+### ============================================
+
+### 测试20: 获取所有产品分类
+GET {{baseUrl}}/products/categories
+Content-Type: application/json
+
+### 测试21: NLQ搜索 + 分类筛选（糖尿病药物）
+GET {{baseUrl}}/products/nlq-search?q=降糖&category=糖尿病药物
+Content-Type: application/json
+
+### 测试22: 价格比较 + 分类筛选（营养补充剂）
+GET {{baseUrl}}/products/compare-prices?q=维生素&category=营养补充剂
+Content-Type: application/json
+
+### ============================================
+### 6. 边界情况测试
+### ============================================
+
+### 测试23: 空查询（应该返回错误）
+GET {{baseUrl}}/products/nlq-search?q=
+Content-Type: application/json
+
+### 测试24: 非常长的查询
+GET {{baseUrl}}/products/nlq-search?q=我需要一种非常便宜且效果好的适合2型糖尿病患者的降血糖药物，最好是二甲双胍或者类似的药物
+Content-Type: application/json
+
+### 测试25: 英文查询
+GET {{baseUrl}}/products/nlq-search?q=metformin
+Content-Type: application/json
+
+### 测试26: 混合中英文查询
+GET {{baseUrl}}/products/nlq-search?q=我需要metformin药物
+Content-Type: application/json
+
+### ============================================
+### 7. 复杂查询测试
+### ============================================
+
+### 测试27: 带价格范围的查询（虽然是自然语言）
+GET {{baseUrl}}/products/nlq-search?q=便宜的降糖药
+Content-Type: application/json
+
+### 测试28: 带品牌名称的查询
+GET {{baseUrl}}/products/compare-prices?q=OneTouch
+Content-Type: application/json
+
+### 测试29: 带供应商名称的查询
+GET {{baseUrl}}/products/nlq-search?q=Chemist Warehouse的二甲双胍
+Content-Type: application/json
+
+### 测试30: 搜索无糖食品
+GET {{baseUrl}}/products/nlq-search?q=无糖食品
+Content-Type: application/json
+

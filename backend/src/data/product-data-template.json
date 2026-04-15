@@ -1,0 +1,67 @@
+{
+  "products": [
+    {
+      "name": "Product Name (e.g., Alpha Lipoic Acid)",
+      "category": "Blood Sugar Control | Boost Energy | Weight Management",
+      "basicInfo": {
+        "activeIngredient": "Main active ingredient",
+        "dosage": "Recommended dosage (e.g., 600mg daily)",
+        "form": "Capsules/Tablets/Liquid",
+        "manufacturer": "Brand or manufacturer name",
+        "description": "Detailed product description",
+        "price": 24.99,
+        "packSize": "60 capsules"
+      },
+      "precautions": {
+        "contraindications": [
+          "Who should NOT use this product",
+          "Specific conditions or situations"
+        ],
+        "possibleSideEffects": [
+          "Common side effect 1",
+          "Common side effect 2",
+          "Rare side effect 1"
+        ],
+        "drugInteractions": [
+          "May interact with medication X",
+          "May enhance effects of medication Y"
+        ],
+        "warnings": [
+          "⚠️ Important warning 1",
+          "⚠️ Important warning 2"
+        ]
+      },
+      "scientificEvidence": {
+        "evidenceLevel": "Grade A/B/C Evidence (Strong/Moderate/Weak Recommendation)",
+        "clinicalStudies": [
+          {
+            "title": "Study title",
+            "year": 2020,
+            "participants": "Number of participants",
+            "duration": "Study duration",
+            "results": "Study results and findings",
+            "source": "Journal name or source"
+          }
+        ],
+        "mechanismOfAction": [
+          "How it works - mechanism 1",
+          "How it works - mechanism 2"
+        ],
+        "recommendedUse": "Specific usage instructions and recommendations"
+      },
+      "diabetesInfo": {
+        "suitability": "high|medium|low",
+        "bloodSugarImpact": "none|minimal|moderate",
+        "benefits": [
+          "Benefit 1",
+          "Benefit 2"
+        ],
+        "targetConditions": [
+          "type2_diabetes",
+          "insulin_resistance"
+        ]
+      }
+    }
+  ]
+}
+

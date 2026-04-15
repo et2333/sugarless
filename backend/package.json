@@ -1,0 +1,59 @@
+{
+  "name": "diabetes-support-backend",
+  "version": "1.0.0",
+  "description": "糖尿病支持平台后端服务",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed-all.ts",
+    "db:seed:test-users": "tsx prisma/seed-test-users.ts",
+    "db:seed:supplements": "tsx prisma/seed-supplements.ts",
+    "db:seed:basic": "tsx prisma/seed.ts",
+    "db:reset": "prisma migrate reset --force",
+    "db:studio": "prisma studio",
+    "db:init": "npm run db:generate && npm run db:migrate && npm run db:seed"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed-all.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.17.0",
+    "@prisma/client": "^6.18.0",
+    "@sendgrid/mail": "^7.7.0",
+    "@types/node-cron": "^3.0.11",
+    "assemblyai": "^4.6.0",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.11",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "google-auth-library": "^9.14.2",
+    "googleapis": "^144.0.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "node-cron": "^4.2.1",
+    "resend": "^3.2.0",
+    "socket.io": "^4.8.1",
+    "stripe": "^14.0.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/helmet": "^4.0.0",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.10.5",
+    "prisma": "^6.18.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

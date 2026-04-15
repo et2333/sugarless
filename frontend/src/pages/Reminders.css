@@ -1,0 +1,112 @@
+/* Reminders Page Styles */
+
+/* Snooze Badge Styles */
+.snooze-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  margin-left: 8px;
+  font-weight: 500;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+  }
+  50% { 
+    opacity: 0.7; 
+  }
+}
+
+.status-tag-snoozing {
+  background: #ffd93d;
+  color: #333;
+  font-weight: 500;
+}
+
+.status.snoozed {
+  background: #ffe4b5;
+  color: #ff8c00;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Check-ins Table Styles */
+.check-ins-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.check-ins-table th {
+  background: #f8f9fa;
+  padding: 12px;
+  text-align: left;
+  font-weight: 500;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 13px;
+}
+
+.check-ins-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 13px;
+}
+
+.content-cell {
+  font-weight: 500;
+  color: #333;
+}
+
+.action-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-badge.triggered {
+  background: #d4edda;
+  color: #155724;
+}
+
+.action-badge.snooze {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.action-badge.complete {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.action-badge.dismiss {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .check-ins-table {
+    font-size: 12px;
+  }
+
+  .check-ins-table th,
+  .check-ins-table td {
+    padding: 8px 6px;
+  }
+}
+
