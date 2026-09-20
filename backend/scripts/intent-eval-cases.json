@@ -1,0 +1,966 @@
+[
+  {
+    "id": "glucose-01",
+    "category": "record_glucose",
+    "input": "Can you record my fasting blood sugar? It's 110 mg/dL",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 100,
+      "valueMax": 120
+    }
+  },
+  {
+    "id": "glucose-02",
+    "category": "record_glucose",
+    "input": "Record my post-meal blood sugar 7.2 mmol/L",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "post_prandial",
+      "valueMin": 7,
+      "valueMax": 8
+    }
+  },
+  {
+    "id": "glucose-03",
+    "category": "record_glucose",
+    "input": "帮我记录空腹血糖110",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 100,
+      "valueMax": 120
+    }
+  },
+  {
+    "id": "glucose-04",
+    "category": "record_glucose",
+    "input": "记录我的随机血糖145 mg/dL",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "random",
+      "valueMin": 140,
+      "valueMax": 150
+    }
+  },
+  {
+    "id": "glucose-05",
+    "category": "record_glucose",
+    "input": "My blood sugar is 95, no discomfort",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "valueMin": 90,
+      "valueMax": 100
+    }
+  },
+  {
+    "id": "glucose-06",
+    "category": "record_glucose",
+    "input": "Log my bedtime glucose reading: 118 mg/dL",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "valueMin": 115,
+      "valueMax": 120
+    }
+  },
+  {
+    "id": "glucose-07",
+    "category": "record_glucose",
+    "input": "Please record fasting glucose 92 mg/dL",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 90,
+      "valueMax": 95
+    }
+  },
+  {
+    "id": "glucose-08",
+    "category": "record_glucose",
+    "input": "记录餐后2小时血糖8.5",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "post_prandial",
+      "valueMin": 8,
+      "valueMax": 9
+    }
+  },
+  {
+    "id": "glucose-09",
+    "category": "record_glucose",
+    "input": "Track my blood sugar: 102 mg/dL fasting",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 100,
+      "valueMax": 105
+    }
+  },
+  {
+    "id": "glucose-10",
+    "category": "record_glucose",
+    "input": "My random blood sugar is 130 mg/dL, please save it",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "random",
+      "valueMin": 125,
+      "valueMax": 135
+    }
+  },
+  {
+    "id": "glucose-11",
+    "category": "record_glucose",
+    "input": "空腹血糖92，帮我记一下",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 90,
+      "valueMax": 95
+    }
+  },
+  {
+    "id": "glucose-12",
+    "category": "record_glucose",
+    "input": "Record glucose 6.1 mmol/L before breakfast",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 6,
+      "valueMax": 6.5
+    }
+  },
+  {
+    "id": "glucose-13",
+    "category": "record_glucose",
+    "input": "Post-lunch sugar level is 165 mg/dL, please record",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "post_prandial",
+      "valueMin": 160,
+      "valueMax": 170
+    }
+  },
+  {
+    "id": "glucose-14",
+    "category": "record_glucose",
+    "input": "睡前血糖7.8 mmol/L，记录一下",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "valueMin": 7.5,
+      "valueMax": 8
+    }
+  },
+  {
+    "id": "glucose-15",
+    "category": "record_glucose",
+    "input": "Blood sugar reading after dinner: 142",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "post_prandial",
+      "valueMin": 140,
+      "valueMax": 145
+    }
+  },
+  {
+    "id": "glucose-16",
+    "category": "record_glucose",
+    "input": "Please log my glucose at 88 mg/dL",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "valueMin": 85,
+      "valueMax": 90
+    }
+  },
+  {
+    "id": "glucose-17",
+    "category": "record_glucose",
+    "input": "随机测了血糖156 mg/dL",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "random",
+      "valueMin": 150,
+      "valueMax": 160
+    }
+  },
+  {
+    "id": "glucose-18",
+    "category": "record_glucose",
+    "input": "My fasting BG is 105 mg/dL",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 100,
+      "valueMax": 110
+    }
+  },
+  {
+    "id": "glucose-19",
+    "category": "record_glucose",
+    "input": "记录午餐后血糖10.2 mmol/L",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "post_prandial",
+      "valueMin": 10,
+      "valueMax": 11
+    }
+  },
+  {
+    "id": "glucose-20",
+    "category": "record_glucose",
+    "input": "Save blood sugar 97 mg/dL fasting",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 95,
+      "valueMax": 100
+    }
+  },
+  {
+    "id": "glucose-21",
+    "category": "record_glucose",
+    "input": "Glucose check result: 7.0 mmol/L random",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "random",
+      "valueMin": 6.5,
+      "valueMax": 7.5
+    }
+  },
+  {
+    "id": "glucose-22",
+    "category": "record_glucose",
+    "input": "帮我录入血糖138",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "valueMin": 135,
+      "valueMax": 140
+    }
+  },
+  {
+    "id": "glucose-23",
+    "category": "record_glucose",
+    "input": "I measured 112 mg/dL this morning fasting",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 110,
+      "valueMax": 115
+    }
+  },
+  {
+    "id": "glucose-24",
+    "category": "record_glucose",
+    "input": "餐后血糖165，麻烦记录",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "post_prandial",
+      "valueMin": 160,
+      "valueMax": 170
+    }
+  },
+  {
+    "id": "glucose-25",
+    "category": "record_glucose",
+    "input": "Current blood glucose is 6.8 mmol/L, record it please",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "valueMin": 6.5,
+      "valueMax": 7
+    }
+  },
+  {
+    "id": "glucose-26",
+    "category": "record_glucose",
+    "input": "Just tested: fasting glucose 101 mg/dL, please add it",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "type": "fasting",
+      "valueMin": 98,
+      "valueMax": 105
+    }
+  },
+  {
+    "id": "reminder-01",
+    "category": "create_reminder",
+    "input": "Remind me to take Metformin at 8 AM daily",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "08:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-02",
+    "category": "create_reminder",
+    "input": "Set a reminder to check blood sugar at 7:30 PM",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "19:30"
+    }
+  },
+  {
+    "id": "reminder-03",
+    "category": "create_reminder",
+    "input": "每天早上8点提醒我吃二甲双胍",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "08:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-04",
+    "category": "create_reminder",
+    "input": "Remind me to exercise at 6 PM every day",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "18:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-05",
+    "category": "create_reminder",
+    "input": "Remind me to take my medication at 9:00 tonight",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "21:00"
+    }
+  },
+  {
+    "id": "reminder-06",
+    "category": "create_reminder",
+    "input": "Create a daily reminder for insulin at 7:00 AM",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "07:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-07",
+    "category": "create_reminder",
+    "input": "晚上9点半提醒测睡前血糖",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "21:30"
+    }
+  },
+  {
+    "id": "reminder-08",
+    "category": "create_reminder",
+    "input": "Set reminder: take pills at noon daily",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "12:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-09",
+    "category": "create_reminder",
+    "input": "Remind me to walk after dinner at 7 PM",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "19:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-10",
+    "category": "create_reminder",
+    "input": "每天下午3点提醒我测血糖",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "15:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-11",
+    "category": "create_reminder",
+    "input": "Please remind me to inject insulin at 6:30 AM",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "06:30",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-12",
+    "category": "create_reminder",
+    "input": "Remind me once at 8 PM tonight to check glucose",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "20:00",
+      "scheduleType": "once"
+    }
+  },
+  {
+    "id": "reminder-13",
+    "category": "create_reminder",
+    "input": "设置提醒：每天12点吃药",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "12:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-14",
+    "category": "create_reminder",
+    "input": "Set a one-time reminder to take medicine at 10:00 AM",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "10:00",
+      "scheduleType": "once"
+    }
+  },
+  {
+    "id": "reminder-15",
+    "category": "create_reminder",
+    "input": "Remind me about blood sugar check at 6:45 AM every day",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "06:45",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-16",
+    "category": "create_reminder",
+    "input": "提醒我晚上8点运动",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "20:00"
+    }
+  },
+  {
+    "id": "reminder-17",
+    "category": "create_reminder",
+    "input": "Create reminder for medication at 9 AM daily",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "09:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-18",
+    "category": "create_reminder",
+    "input": "Remind me to test glucose before breakfast at 6 AM",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "06:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-19",
+    "category": "create_reminder",
+    "input": "下午5点提醒我吃二甲双胍",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "17:00"
+    }
+  },
+  {
+    "id": "reminder-20",
+    "category": "create_reminder",
+    "input": "Set daily alert for metformin at 8:00 PM",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "20:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-21",
+    "category": "create_reminder",
+    "input": "Remind me to take vitamins at 8 AM daily",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "08:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-22",
+    "category": "create_reminder",
+    "input": "帮我设置提醒：每天7点测空腹血糖",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "07:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-23",
+    "category": "create_reminder",
+    "input": "Schedule reminder to exercise at 5:30 PM daily",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "17:30",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-24",
+    "category": "create_reminder",
+    "input": "Remind me to check ketones at 10 PM tonight",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "22:00"
+    }
+  },
+  {
+    "id": "reminder-25",
+    "category": "create_reminder",
+    "input": "每天中午11点半提醒午餐前测血糖",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "11:30",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "reminder-26",
+    "category": "create_reminder",
+    "input": "Add a daily reminder to drink water at 10 AM",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "10:00",
+      "scheduleType": "daily"
+    }
+  },
+  {
+    "id": "advice-01",
+    "category": "general_advice",
+    "input": "What is the normal blood sugar range?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-02",
+    "category": "general_advice",
+    "input": "血糖正常范围是多少？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-03",
+    "category": "general_advice",
+    "input": "Give me exercise advice for diabetes",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-04",
+    "category": "general_advice",
+    "input": "Analyze my blood sugar trend",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-05",
+    "category": "general_advice",
+    "input": "What is HbA1c and why does it matter?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-06",
+    "category": "general_advice",
+    "input": "二甲双胍有什么副作用？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-07",
+    "category": "general_advice",
+    "input": "How does insulin work in the body?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-08",
+    "category": "general_advice",
+    "input": "What are symptoms of hypoglycemia?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-09",
+    "category": "general_advice",
+    "input": "糖尿病患者可以吃水果吗？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-10",
+    "category": "general_advice",
+    "input": "Explain the difference between Type 1 and Type 2 diabetes",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-11",
+    "category": "general_advice",
+    "input": "How often should I check my blood sugar?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-12",
+    "category": "general_advice",
+    "input": "什么是糖化血红蛋白？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-13",
+    "category": "general_advice",
+    "input": "Tips for managing diabetes at work",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-14",
+    "category": "general_advice",
+    "input": "How to prevent diabetic foot problems?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-15",
+    "category": "general_advice",
+    "input": "运动对血糖有什么影响？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-16",
+    "category": "general_advice",
+    "input": "What foods should diabetics avoid?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-17",
+    "category": "general_advice",
+    "input": "How to read a nutrition label for sugar content",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-18",
+    "category": "general_advice",
+    "input": "低血糖时应该怎么办？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-19",
+    "category": "general_advice",
+    "input": "Why is fiber important for blood sugar control?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-20",
+    "category": "general_advice",
+    "input": "Can stress affect blood glucose levels?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-21",
+    "category": "general_advice",
+    "input": "胰岛素的储存方法是什么？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-22",
+    "category": "general_advice",
+    "input": "What is the dawn phenomenon?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-23",
+    "category": "general_advice",
+    "input": "How to travel safely with diabetes",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-24",
+    "category": "general_advice",
+    "input": "睡前血糖高是什么原因？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-25",
+    "category": "general_advice",
+    "input": "Explain carbs counting basics",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-26",
+    "category": "general_advice",
+    "input": "What is continuous glucose monitoring?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-27",
+    "category": "general_advice",
+    "input": "如何与医生沟通调整用药？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-28",
+    "category": "general_advice",
+    "input": "Difference between fasting and random glucose tests",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-29",
+    "category": "general_advice",
+    "input": "How much water should a diabetic drink daily?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-30",
+    "category": "general_advice",
+    "input": "长期高血糖会有什么并发症？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-31",
+    "category": "general_advice",
+    "input": "What is the glycemic index?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "advice-32",
+    "category": "general_advice",
+    "input": "胰岛素泵如何使用？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "meal-01",
+    "category": "generate_meal_plan",
+    "input": "Generate a meal plan for me for the next 7 days",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-02",
+    "category": "generate_meal_plan",
+    "input": "帮我生成本周低糖餐单",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-03",
+    "category": "generate_meal_plan",
+    "input": "Create a diabetic-friendly meal plan for this week",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-04",
+    "category": "generate_meal_plan",
+    "input": "请为我制定3天的糖尿病膳食计划",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-05",
+    "category": "generate_meal_plan",
+    "input": "Plan my meals for tomorrow with low carb options",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-06",
+    "category": "generate_meal_plan",
+    "input": "生成一份适合糖尿病的一日三餐计划",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-07",
+    "category": "generate_meal_plan",
+    "input": "I need a weekly meal plan for type 2 diabetes",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-08",
+    "category": "generate_meal_plan",
+    "input": "帮我安排这周的健康食谱",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-09",
+    "category": "generate_meal_plan",
+    "input": "Generate a 5-day low GI meal plan",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-10",
+    "category": "generate_meal_plan",
+    "input": "制定低碳水化合物的一周餐单",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-11",
+    "category": "generate_meal_plan",
+    "input": "Can you create a personalized meal plan for my diabetes?",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "meal-12",
+    "category": "generate_meal_plan",
+    "input": "给我做一个控糖膳食计划，7天",
+    "expectedIntent": "generate_meal_plan"
+  },
+  {
+    "id": "emergency-01",
+    "category": "emergency_alert",
+    "input": "I have severe chest pain and difficulty breathing",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-02",
+    "category": "emergency_alert",
+    "input": "blood sugar below 2, I feel dizzy",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-03",
+    "category": "emergency_alert",
+    "input": "我胸痛呼吸困难，快救命",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-04",
+    "category": "emergency_alert",
+    "input": "I lost consciousness",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-05",
+    "category": "emergency_alert",
+    "input": "血糖低于2，严重低血糖",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-06",
+    "category": "emergency_alert",
+    "input": "severe hypoglycemia, blood sugar 2",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-07",
+    "category": "emergency_alert",
+    "input": "passed out and cannot wake up",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-08",
+    "category": "emergency_alert",
+    "input": "blood sugar below 3, shaking badly",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-09",
+    "category": "emergency_alert",
+    "input": "酮症酸中毒，非常严重",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-10",
+    "category": "emergency_alert",
+    "input": "call 911 I can't breathe",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-11",
+    "category": "emergency_alert",
+    "input": "diabetic ketoacidosis symptoms getting worse",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-12",
+    "category": "emergency_alert",
+    "input": "血糖极低，我意识模糊了",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-13",
+    "category": "emergency_alert",
+    "input": "extreme pain in chest, need doctor now",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-14",
+    "category": "emergency_alert",
+    "input": "blood sugar over 25, medical emergency",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-15",
+    "category": "emergency_alert",
+    "input": "持续呕吐无法进食，血糖很高",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-16",
+    "category": "emergency_alert",
+    "input": "blood sugar is below 2 mmol/L, I feel very weak",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "emergency-17",
+    "category": "emergency_alert",
+    "input": "我快昏倒了，血糖1.8",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "negative-01",
+    "category": "general_advice",
+    "input": "Remind me to take medicine at 8 AM",
+    "expectedIntent": "create_reminder",
+    "note": "应识别为提醒，不应误判为紧急"
+  },
+  {
+    "id": "negative-02",
+    "category": "general_advice",
+    "input": "Help me set a reminder for blood sugar check at 7 AM",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "07:00"
+    },
+    "note": "含 help 但不应触发紧急"
+  },
+  {
+    "id": "negative-03",
+    "category": "general_advice",
+    "input": "Can you help me log my blood sugar at 100 mg/dL",
+    "expectedIntent": "record_glucose",
+    "expectedFields": {
+      "valueMin": 95,
+      "valueMax": 105
+    },
+    "note": "含 help 但应识别为记录血糖"
+  },
+  {
+    "id": "negative-04",
+    "category": "general_advice",
+    "input": "Set a reminder for medication at 8 PM daily",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "20:00",
+      "scheduleType": "daily"
+    },
+    "note": "set 不应触发紧急"
+  },
+  {
+    "id": "negative-05",
+    "category": "general_advice",
+    "input": "帮我设置一个提醒，每天早上7点测血糖",
+    "expectedIntent": "create_reminder",
+    "expectedFields": {
+      "scheduleTime": "07:00",
+      "scheduleType": "daily"
+    },
+    "note": "设置提醒不应触发紧急"
+  },
+  {
+    "id": "negative-06",
+    "category": "general_advice",
+    "input": "Is oatmeal good for breakfast with diabetes?",
+    "expectedIntent": "general_advice",
+    "note": "咨询类，不应触发 generate_meal_plan"
+  },
+  {
+    "id": "negative-07",
+    "category": "general_advice",
+    "input": "低GI食物有哪些？",
+    "expectedIntent": "general_advice",
+    "note": "知识问答，不应触发 generate_meal_plan"
+  }
+]

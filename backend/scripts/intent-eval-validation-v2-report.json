@@ -1,0 +1,275 @@
+{
+  "generatedAt": "2026-09-18T15:22:50.807Z",
+  "results": [
+    {
+      "id": "holdout-glucose-01",
+      "input": "Could you add my pre-breakfast glucose, 98 mg/dL?",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 2
+    },
+    {
+      "id": "holdout-glucose-02",
+      "input": "刚测完，血糖是6.6 mmol/L，帮我存一下",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "holdout-glucose-03",
+      "input": "Please log 134 as my after-lunch sugar reading",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 3498
+    },
+    {
+      "id": "holdout-glucose-04",
+      "input": "睡觉前量了7.1，记录到血糖里",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "holdout-glucose-05",
+      "input": "BG 104 mg/dL this morning - save that for me",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "holdout-glucose-06",
+      "input": "餐后两小时测得血糖9.2，记一笔",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "holdout-reminder-01",
+      "input": "At quarter past six each evening, remind me to go for a walk",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "holdout-reminder-02",
+      "input": "每天早晨六点半叫我测空腹血糖",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "holdout-reminder-03",
+      "input": "Schedule my Metformin alert for 8:45 tonight only",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 2042
+    },
+    {
+      "id": "holdout-reminder-04",
+      "input": "明天下午两点提醒复诊",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 3
+    },
+    {
+      "id": "holdout-reminder-05",
+      "input": "I need a daily 12:30 PM reminder for my tablets",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 2553
+    },
+    {
+      "id": "holdout-reminder-06",
+      "input": "晚上十点一刻提醒我打胰岛素",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "holdout-meal-01",
+      "input": "Build me a three-day diabetic-friendly menu",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1549
+    },
+    {
+      "id": "holdout-meal-02",
+      "input": "按低GI原则安排未来五天的三餐",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "holdout-meal-03",
+      "input": "Can you create tomorrow's vegetarian meal plan?",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "holdout-meal-04",
+      "input": "给我做一个七天控糖食谱，不要海鲜",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "holdout-advice-01",
+      "input": "Does poor sleep affect insulin sensitivity?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1472
+    },
+    {
+      "id": "holdout-advice-02",
+      "input": "为什么餐后散步有助于控制血糖？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3291
+    },
+    {
+      "id": "holdout-advice-03",
+      "input": "How should I interpret an HbA1c result?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2064
+    },
+    {
+      "id": "holdout-advice-04",
+      "input": "无糖饮料一定不会影响血糖吗？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1880
+    },
+    {
+      "id": "holdout-advice-05",
+      "input": "What is the difference between carbs and added sugar?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2783
+    },
+    {
+      "id": "holdout-emergency-01",
+      "input": "My glucose is 2.4 mmol/L and I feel like I may pass out",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "holdout-emergency-02",
+      "input": "血糖只有2.3，我站不稳了",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "holdout-emergency-03",
+      "input": "I cannot breathe properly and have chest pain",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "holdout-emergency-04",
+      "input": "打完胰岛素后意识有点不清",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "holdout-emergency-05",
+      "input": "Blood glucose is above 25 and I keep vomiting",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "holdout-negative-01",
+      "input": "What time of day is best for checking glucose?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1623
+    },
+    {
+      "id": "holdout-negative-02",
+      "input": "我忘了今天有没有吃药，应该怎么办？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3187
+    },
+    {
+      "id": "holdout-negative-03",
+      "input": "Is a reading of 105 mg/dL normal after exercise?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2932
+    },
+    {
+      "id": "holdout-negative-04",
+      "input": "Can you explain what a low-carb meal plan means?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2485
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "id": "holdout-glucose-01",
+    "category": "record_glucose",
+    "input": "Could you add my pre-breakfast glucose, 98 mg/dL?",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "type": "fasting", "valueMin": 97, "valueMax": 99 }
+  },
+  {
+    "id": "holdout-glucose-02",
+    "category": "record_glucose",
+    "input": "刚测完，血糖是6.6 mmol/L，帮我存一下",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "valueMin": 6.5, "valueMax": 6.7 }
+  },
+  {
+    "id": "holdout-glucose-03",
+    "category": "record_glucose",
+    "input": "Please log 134 as my after-lunch sugar reading",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "type": "post_prandial", "valueMin": 133, "valueMax": 135 }
+  },
+  {
+    "id": "holdout-glucose-04",
+    "category": "record_glucose",
+    "input": "睡觉前量了7.1，记录到血糖里",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "valueMin": 7, "valueMax": 7.2 }
+  },
+  {
+    "id": "holdout-glucose-05",
+    "category": "record_glucose",
+    "input": "BG 104 mg/dL this morning - save that for me",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "valueMin": 103, "valueMax": 105 }
+  },
+  {
+    "id": "holdout-glucose-06",
+    "category": "record_glucose",
+    "input": "餐后两小时测得血糖9.2，记一笔",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "type": "post_prandial", "valueMin": 9.1, "valueMax": 9.3 }
+  },
+  {
+    "id": "holdout-reminder-01",
+    "category": "create_reminder",
+    "input": "At quarter past six each evening, remind me to go for a walk",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "18:15", "scheduleType": "daily" }
+  },
+  {
+    "id": "holdout-reminder-02",
+    "category": "create_reminder",
+    "input": "每天早晨六点半叫我测空腹血糖",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "06:30", "scheduleType": "daily" }
+  },
+  {
+    "id": "holdout-reminder-03",
+    "category": "create_reminder",
+    "input": "Schedule my Metformin alert for 8:45 tonight only",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "20:45", "scheduleType": "once" }
+  },
+  {
+    "id": "holdout-reminder-04",
+    "category": "create_reminder",
+    "input": "明天下午两点提醒复诊",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "14:00", "scheduleType": "once" }
+  },
+  {
+    "id": "holdout-reminder-05",
+    "category": "create_reminder",
+    "input": "I need a daily 12:30 PM reminder for my tablets",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "12:30", "scheduleType": "daily" }
+  },
+  {
+    "id": "holdout-reminder-06",
+    "category": "create_reminder",
+    "input": "晚上十点一刻提醒我打胰岛素",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "22:15", "scheduleType": "daily" }
+  },
+  {
+    "id": "holdout-meal-01",
+    "category": "generate_meal_plan",
+    "input": "Build me a three-day diabetic-friendly menu",
+    "expectedIntent": "generate_meal_plan",
+    "expectedFields": { "days": 3 }
+  },
+  {
+    "id": "holdout-meal-02",
+    "category": "generate_meal_plan",
+    "input": "按低GI原则安排未来五天的三餐",
+    "expectedIntent": "generate_meal_plan",
+    "expectedFields": { "days": 5 }
+  },
+  {
+    "id": "holdout-meal-03",
+    "category": "generate_meal_plan",
+    "input": "Can you create tomorrow's vegetarian meal plan?",
+    "expectedIntent": "generate_meal_plan",
+    "expectedFields": { "days": 1 }
+  },
+  {
+    "id": "holdout-meal-04",
+    "category": "generate_meal_plan",
+    "input": "给我做一个七天控糖食谱，不要海鲜",
+    "expectedIntent": "generate_meal_plan",
+    "expectedFields": { "days": 7 }
+  },
+  {
+    "id": "holdout-advice-01",
+    "category": "general_advice",
+    "input": "Does poor sleep affect insulin sensitivity?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "holdout-advice-02",
+    "category": "general_advice",
+    "input": "为什么餐后散步有助于控制血糖？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "holdout-advice-03",
+    "category": "general_advice",
+    "input": "How should I interpret an HbA1c result?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "holdout-advice-04",
+    "category": "general_advice",
+    "input": "无糖饮料一定不会影响血糖吗？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "holdout-advice-05",
+    "category": "general_advice",
+    "input": "What is the difference between carbs and added sugar?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "holdout-emergency-01",
+    "category": "emergency_alert",
+    "input": "My glucose is 2.4 mmol/L and I feel like I may pass out",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "holdout-emergency-02",
+    "category": "emergency_alert",
+    "input": "血糖只有2.3，我站不稳了",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "holdout-emergency-03",
+    "category": "emergency_alert",
+    "input": "I cannot breathe properly and have chest pain",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "holdout-emergency-04",
+    "category": "emergency_alert",
+    "input": "打完胰岛素后意识有点不清",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "holdout-emergency-05",
+    "category": "emergency_alert",
+    "input": "Blood glucose is above 25 and I keep vomiting",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "holdout-negative-01",
+    "category": "general_advice",
+    "input": "What time of day is best for checking glucose?",
+    "expectedIntent": "general_advice",
+    "note": "A time-related question must not create a reminder"
+  },
+  {
+    "id": "holdout-negative-02",
+    "category": "general_advice",
+    "input": "我忘了今天有没有吃药，应该怎么办？",
+    "expectedIntent": "general_advice",
+    "note": "Medication mention must not create a reminder"
+  },
+  {
+    "id": "holdout-negative-03",
+    "category": "general_advice",
+    "input": "Is a reading of 105 mg/dL normal after exercise?",
+    "expectedIntent": "general_advice",
+    "note": "A value in a question must not be recorded"
+  },
+  {
+    "id": "holdout-negative-04",
+    "category": "general_advice",
+    "input": "Can you explain what a low-carb meal plan means?",
+    "expectedIntent": "general_advice",
+    "note": "Explanation request must not generate a meal plan"
+  }
+]

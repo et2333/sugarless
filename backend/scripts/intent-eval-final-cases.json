@@ -1,0 +1,133 @@
+[
+  {
+    "id": "final-glucose-01",
+    "category": "record_glucose",
+    "input": "Post-dinner glucose came back at 8.8 mmol/L; add it to my log",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "type": "post_prandial", "valueMin": 8.7, "valueMax": 8.9 }
+  },
+  {
+    "id": "final-glucose-02",
+    "category": "record_glucose",
+    "input": "把今早空腹测的102 mg/dL记下来",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "type": "fasting", "valueMin": 101, "valueMax": 103 }
+  },
+  {
+    "id": "final-glucose-03",
+    "category": "record_glucose",
+    "input": "Save a random BG measurement of 127",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "type": "random", "valueMin": 126, "valueMax": 128 }
+  },
+  {
+    "id": "final-glucose-04",
+    "category": "record_glucose",
+    "input": "晚饭后量到8.1，帮我记到血糖记录",
+    "expectedIntent": "record_glucose",
+    "expectedFields": { "type": "post_prandial", "valueMin": 8, "valueMax": 8.2 }
+  },
+  {
+    "id": "final-reminder-01",
+    "category": "create_reminder",
+    "input": "Wake me with a glucose-check reminder every morning at 6:20",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "06:20", "scheduleType": "daily" }
+  },
+  {
+    "id": "final-reminder-02",
+    "category": "create_reminder",
+    "input": "每晚八点四十五提醒服药",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "20:45", "scheduleType": "daily" }
+  },
+  {
+    "id": "final-reminder-03",
+    "category": "create_reminder",
+    "input": "Please alert me once at 3:10 PM tomorrow for my appointment",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "15:10", "scheduleType": "once" }
+  },
+  {
+    "id": "final-reminder-04",
+    "category": "create_reminder",
+    "input": "早上七点提醒打长效胰岛素，每天一次",
+    "expectedIntent": "create_reminder",
+    "expectedFields": { "scheduleTime": "07:00", "scheduleType": "daily" }
+  },
+  {
+    "id": "final-meal-01",
+    "category": "generate_meal_plan",
+    "input": "Prepare a four-day high-fibre meal schedule for me",
+    "expectedIntent": "generate_meal_plan",
+    "expectedFields": { "days": 4 }
+  },
+  {
+    "id": "final-meal-02",
+    "category": "generate_meal_plan",
+    "input": "设计三天的控糖素食菜单",
+    "expectedIntent": "generate_meal_plan",
+    "expectedFields": { "days": 3 }
+  },
+  {
+    "id": "final-meal-03",
+    "category": "generate_meal_plan",
+    "input": "I need meals planned for the next seven days without dairy",
+    "expectedIntent": "generate_meal_plan",
+    "expectedFields": { "days": 7 }
+  },
+  {
+    "id": "final-advice-01",
+    "category": "general_advice",
+    "input": "Why can illness make glucose readings higher?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "final-advice-02",
+    "category": "general_advice",
+    "input": "运动前需要额外吃碳水吗？",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "final-advice-03",
+    "category": "general_advice",
+    "input": "How does dehydration influence blood sugar?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "final-emergency-01",
+    "category": "emergency_alert",
+    "input": "My blood sugar is 2.7 mmol/L and I am sweating and shaking",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "final-emergency-02",
+    "category": "emergency_alert",
+    "input": "血糖2.6并且开始神志不清",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "final-emergency-03",
+    "category": "emergency_alert",
+    "input": "Glucose is over 28 and I have been vomiting continuously",
+    "expectedIntent": "emergency_alert"
+  },
+  {
+    "id": "final-negative-01",
+    "category": "general_advice",
+    "input": "Would 6:30 AM be a reasonable time to test fasting glucose?",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "final-negative-02",
+    "category": "general_advice",
+    "input": "介绍一下七天控糖餐单通常包含什么",
+    "expectedIntent": "general_advice"
+  },
+  {
+    "id": "final-negative-03",
+    "category": "general_advice",
+    "input": "I recorded 130 yesterday; is that result concerning?",
+    "expectedIntent": "general_advice"
+  }
+]

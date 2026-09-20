@@ -1,0 +1,1085 @@
+{
+  "generatedAt": "2026-09-18T15:05:12.156Z",
+  "results": [
+    {
+      "id": "glucose-01",
+      "input": "Can you record my fasting blood sugar? It's 110 mg/dL",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-02",
+      "input": "Record my post-meal blood sugar 7.2 mmol/L",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-03",
+      "input": "帮我记录空腹血糖110",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-04",
+      "input": "记录我的随机血糖145 mg/dL",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-05",
+      "input": "My blood sugar is 95, no discomfort",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-06",
+      "input": "Log my bedtime glucose reading: 118 mg/dL",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-07",
+      "input": "Please record fasting glucose 92 mg/dL",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-08",
+      "input": "记录餐后2小时血糖8.5",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-09",
+      "input": "Track my blood sugar: 102 mg/dL fasting",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-10",
+      "input": "My random blood sugar is 130 mg/dL, please save it",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-11",
+      "input": "空腹血糖92，帮我记一下",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-12",
+      "input": "Record glucose 6.1 mmol/L before breakfast",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-13",
+      "input": "Post-lunch sugar level is 165 mg/dL, please record",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-14",
+      "input": "睡前血糖7.8 mmol/L，记录一下",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-15",
+      "input": "Blood sugar reading after dinner: 142",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-16",
+      "input": "Please log my glucose at 88 mg/dL",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-17",
+      "input": "随机测了血糖156 mg/dL",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-18",
+      "input": "My fasting BG is 105 mg/dL",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 3253
+    },
+    {
+      "id": "glucose-19",
+      "input": "记录午餐后血糖10.2 mmol/L",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-20",
+      "input": "Save blood sugar 97 mg/dL fasting",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-21",
+      "input": "Glucose check result: 7.0 mmol/L random",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-22",
+      "input": "帮我录入血糖138",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-23",
+      "input": "I measured 112 mg/dL this morning fasting",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 2210
+    },
+    {
+      "id": "glucose-24",
+      "input": "餐后血糖165，麻烦记录",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "glucose-25",
+      "input": "Current blood glucose is 6.8 mmol/L, record it please",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "glucose-26",
+      "input": "Just tested: fasting glucose 101 mg/dL, please add it",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-01",
+      "input": "Remind me to take Metformin at 8 AM daily",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "reminder-02",
+      "input": "Set a reminder to check blood sugar at 7:30 PM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "reminder-03",
+      "input": "每天早上8点提醒我吃二甲双胍",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "reminder-04",
+      "input": "Remind me to exercise at 6 PM every day",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "reminder-05",
+      "input": "Remind me to take my medication at 9:00 tonight",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-06",
+      "input": "Create a daily reminder for insulin at 7:00 AM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 2932
+    },
+    {
+      "id": "reminder-07",
+      "input": "晚上9点半提醒测睡前血糖",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-08",
+      "input": "Set reminder: take pills at noon daily",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-09",
+      "input": "Remind me to walk after dinner at 7 PM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-10",
+      "input": "每天下午3点提醒我测血糖",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-11",
+      "input": "Please remind me to inject insulin at 6:30 AM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "reminder-12",
+      "input": "Remind me once at 8 PM tonight to check glucose",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-13",
+      "input": "设置提醒：每天12点吃药",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-14",
+      "input": "Set a one-time reminder to take medicine at 10:00 AM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-15",
+      "input": "Remind me about blood sugar check at 6:45 AM every day",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "reminder-16",
+      "input": "提醒我晚上8点运动",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-17",
+      "input": "Create reminder for medication at 9 AM daily",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-18",
+      "input": "Remind me to test glucose before breakfast at 6 AM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-19",
+      "input": "下午5点提醒我吃二甲双胍",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "reminder-20",
+      "input": "Set daily alert for metformin at 8:00 PM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 4124
+    },
+    {
+      "id": "reminder-21",
+      "input": "Remind me to take vitamins at 8 AM daily",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-22",
+      "input": "帮我设置提醒：每天7点测空腹血糖",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-23",
+      "input": "Schedule reminder to exercise at 5:30 PM daily",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-24",
+      "input": "Remind me to check ketones at 10 PM tonight",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-25",
+      "input": "每天中午11点半提醒午餐前测血糖",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "reminder-26",
+      "input": "Add a daily reminder to drink water at 10 AM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "advice-01",
+      "input": "What is the normal blood sugar range?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2108
+    },
+    {
+      "id": "advice-02",
+      "input": "血糖正常范围是多少？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3523
+    },
+    {
+      "id": "advice-03",
+      "input": "Give me exercise advice for diabetes",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1838
+    },
+    {
+      "id": "advice-04",
+      "input": "Analyze my blood sugar trend",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2450
+    },
+    {
+      "id": "advice-05",
+      "input": "What is HbA1c and why does it matter?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1626
+    },
+    {
+      "id": "advice-06",
+      "input": "二甲双胍有什么副作用？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3448
+    },
+    {
+      "id": "advice-07",
+      "input": "How does insulin work in the body?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2884
+    },
+    {
+      "id": "advice-08",
+      "input": "What are symptoms of hypoglycemia?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2118
+    },
+    {
+      "id": "advice-09",
+      "input": "糖尿病患者可以吃水果吗？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3032
+    },
+    {
+      "id": "advice-10",
+      "input": "Explain the difference between Type 1 and Type 2 diabetes",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2349
+    },
+    {
+      "id": "advice-11",
+      "input": "How often should I check my blood sugar?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2932
+    },
+    {
+      "id": "advice-12",
+      "input": "什么是糖化血红蛋白？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3088
+    },
+    {
+      "id": "advice-13",
+      "input": "Tips for managing diabetes at work",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2163
+    },
+    {
+      "id": "advice-14",
+      "input": "How to prevent diabetic foot problems?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1933
+    },
+    {
+      "id": "advice-15",
+      "input": "运动对血糖有什么影响？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3470
+    },
+    {
+      "id": "advice-16",
+      "input": "What foods should diabetics avoid?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1526
+    },
+    {
+      "id": "advice-17",
+      "input": "How to read a nutrition label for sugar content",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1646
+    },
+    {
+      "id": "advice-18",
+      "input": "低血糖时应该怎么办？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3164
+    },
+    {
+      "id": "advice-19",
+      "input": "Why is fiber important for blood sugar control?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1570
+    },
+    {
+      "id": "advice-20",
+      "input": "Can stress affect blood glucose levels?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2624
+    },
+    {
+      "id": "advice-21",
+      "input": "胰岛素的储存方法是什么？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3238
+    },
+    {
+      "id": "advice-22",
+      "input": "What is the dawn phenomenon?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2701
+    },
+    {
+      "id": "advice-23",
+      "input": "How to travel safely with diabetes",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1876
+    },
+    {
+      "id": "advice-24",
+      "input": "睡前血糖高是什么原因？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3110
+    },
+    {
+      "id": "advice-25",
+      "input": "Explain carbs counting basics",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1475
+    },
+    {
+      "id": "advice-26",
+      "input": "What is continuous glucose monitoring?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1333
+    },
+    {
+      "id": "advice-27",
+      "input": "如何与医生沟通调整用药？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3303
+    },
+    {
+      "id": "advice-28",
+      "input": "Difference between fasting and random glucose tests",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2791
+    },
+    {
+      "id": "advice-29",
+      "input": "How much water should a diabetic drink daily?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2312
+    },
+    {
+      "id": "advice-30",
+      "input": "长期高血糖会有什么并发症？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2558
+    },
+    {
+      "id": "advice-31",
+      "input": "What is the glycemic index?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1764
+    },
+    {
+      "id": "advice-32",
+      "input": "胰岛素泵如何使用？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3008
+    },
+    {
+      "id": "meal-01",
+      "input": "Generate a meal plan for me for the next 7 days",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 0
+    },
+    {
+      "id": "meal-02",
+      "input": "帮我生成本周低糖餐单",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 1
+    },
+    {
+      "id": "meal-03",
+      "input": "Create a diabetic-friendly meal plan for this week",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 1
+    },
+    {
+      "id": "meal-04",
+      "input": "请为我制定3天的糖尿病膳食计划",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 1
+    },
+    {
+      "id": "meal-05",
+      "input": "Plan my meals for tomorrow with low carb options",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 0
+    },
+    {
+      "id": "meal-06",
+      "input": "生成一份适合糖尿病的一日三餐计划",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 1
+    },
+    {
+      "id": "meal-07",
+      "input": "I need a weekly meal plan for type 2 diabetes",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 1
+    },
+    {
+      "id": "meal-08",
+      "input": "帮我安排这周的健康食谱",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 1
+    },
+    {
+      "id": "meal-09",
+      "input": "Generate a 5-day low GI meal plan",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 0
+    },
+    {
+      "id": "meal-10",
+      "input": "制定低碳水化合物的一周餐单",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 0
+    },
+    {
+      "id": "meal-11",
+      "input": "Can you create a personalized meal plan for my diabetes?",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 0
+    },
+    {
+      "id": "meal-12",
+      "input": "给我做一个控糖膳食计划，7天",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-01",
+      "input": "I have severe chest pain and difficulty breathing",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-02",
+      "input": "blood sugar below 2, I feel dizzy",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-03",
+      "input": "我胸痛呼吸困难，快救命",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-04",
+      "input": "I lost consciousness",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-05",
+      "input": "血糖低于2，严重低血糖",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-06",
+      "input": "severe hypoglycemia, blood sugar 2",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-07",
+      "input": "passed out and cannot wake up",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-08",
+      "input": "blood sugar below 3, shaking badly",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-09",
+      "input": "酮症酸中毒，非常严重",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-10",
+      "input": "call 911 I can't breathe",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-11",
+      "input": "diabetic ketoacidosis symptoms getting worse",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-12",
+      "input": "血糖极低，我意识模糊了",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-13",
+      "input": "extreme pain in chest, need doctor now",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-14",
+      "input": "blood sugar over 25, medical emergency",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-15",
+      "input": "持续呕吐无法进食，血糖很高",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-16",
+      "input": "blood sugar is below 2 mmol/L, I feel very weak",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "emergency-17",
+      "input": "我快昏倒了，血糖1.8",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "negative-01",
+      "input": "Remind me to take medicine at 8 AM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "无字段校验",
+      "latencyMs": 0
+    },
+    {
+      "id": "negative-02",
+      "input": "Help me set a reminder for blood sugar check at 7 AM",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "negative-03",
+      "input": "Can you help me log my blood sugar at 100 mg/dL",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "negative-04",
+      "input": "Set a reminder for medication at 8 PM daily",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "negative-05",
+      "input": "帮我设置一个提醒，每天早上7点测血糖",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 0
+    },
+    {
+      "id": "negative-06",
+      "input": "Is oatmeal good for breakfast with diabetes?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2641
+    },
+    {
+      "id": "negative-07",
+      "input": "低GI食物有哪些？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3380
+    }
+  ]
+}

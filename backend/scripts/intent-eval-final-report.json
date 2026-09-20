@@ -1,0 +1,185 @@
+{
+  "generatedAt": "2026-09-18T15:25:22.751Z",
+  "results": [
+    {
+      "id": "final-glucose-01",
+      "input": "Post-dinner glucose came back at 8.8 mmol/L; add it to my log",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 2
+    },
+    {
+      "id": "final-glucose-02",
+      "input": "把今早空腹测的102 mg/dL记下来",
+      "expected": "record_glucose",
+      "actual": "general_advice",
+      "pass": false,
+      "reason": "意图类型不匹配",
+      "latencyMs": 3671
+    },
+    {
+      "id": "final-glucose-03",
+      "input": "Save a random BG measurement of 127",
+      "expected": "record_glucose",
+      "actual": "record_glucose",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1
+    },
+    {
+      "id": "final-glucose-04",
+      "input": "晚饭后量到8.1，帮我记到血糖记录",
+      "expected": "record_glucose",
+      "actual": "general_advice",
+      "pass": false,
+      "reason": "意图类型不匹配",
+      "latencyMs": 2992
+    },
+    {
+      "id": "final-reminder-01",
+      "input": "Wake me with a glucose-check reminder every morning at 6:20",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1985
+    },
+    {
+      "id": "final-reminder-02",
+      "input": "每晚八点四十五提醒服药",
+      "expected": "create_reminder",
+      "actual": "general_advice",
+      "pass": false,
+      "reason": "意图类型不匹配",
+      "latencyMs": 2927
+    },
+    {
+      "id": "final-reminder-03",
+      "input": "Please alert me once at 3:10 PM tomorrow for my appointment",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1897
+    },
+    {
+      "id": "final-reminder-04",
+      "input": "早上七点提醒打长效胰岛素，每天一次",
+      "expected": "create_reminder",
+      "actual": "create_reminder",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 2245
+    },
+    {
+      "id": "final-meal-01",
+      "input": "Prepare a four-day high-fibre meal schedule for me",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 1664
+    },
+    {
+      "id": "final-meal-02",
+      "input": "设计三天的控糖素食菜单",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 2717
+    },
+    {
+      "id": "final-meal-03",
+      "input": "I need meals planned for the next seven days without dairy",
+      "expected": "generate_meal_plan",
+      "actual": "generate_meal_plan",
+      "pass": true,
+      "reason": "字段校验通过",
+      "latencyMs": 2477
+    },
+    {
+      "id": "final-advice-01",
+      "input": "Why can illness make glucose readings higher?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3065
+    },
+    {
+      "id": "final-advice-02",
+      "input": "运动前需要额外吃碳水吗？",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 3092
+    },
+    {
+      "id": "final-advice-03",
+      "input": "How does dehydration influence blood sugar?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 2707
+    },
+    {
+      "id": "final-emergency-01",
+      "input": "My blood sugar is 2.7 mmol/L and I am sweating and shaking",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "final-emergency-02",
+      "input": "血糖2.6并且开始神志不清",
+      "expected": "emergency_alert",
+      "actual": "emergency_alert",
+      "pass": true,
+      "reason": "规则引擎命中紧急关键词",
+      "latencyMs": 0
+    },
+    {
+      "id": "final-emergency-03",
+      "input": "Glucose is over 28 and I have been vomiting continuously",
+      "expected": "emergency_alert",
+      "actual": "none",
+      "pass": false,
+      "reason": "未检测到紧急情况",
+      "latencyMs": 1
+    },
+    {
+      "id": "final-negative-01",
+      "input": "Would 6:30 AM be a reasonable time to test fasting glucose?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1501
+    },
+    {
+      "id": "final-negative-02",
+      "input": "介绍一下七天控糖餐单通常包含什么",
+      "expected": "general_advice",
+      "actual": "generate_meal_plan",
+      "pass": false,
+      "reason": "误触发 Action: generate_meal_plan",
+      "latencyMs": 1
+    },
+    {
+      "id": "final-negative-03",
+      "input": "I recorded 130 yesterday; is that result concerning?",
+      "expected": "general_advice",
+      "actual": "general_advice",
+      "pass": true,
+      "reason": "未触发业务 Action（符合预期）",
+      "latencyMs": 1653
+    }
+  ]
+}

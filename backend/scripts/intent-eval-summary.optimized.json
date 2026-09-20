@@ -1,0 +1,88 @@
+{
+  "source": "intent-eval-report.optimized.json",
+  "generatedAt": "2026-09-18T15:02:13.081Z",
+  "sampleCount": 120,
+  "overall": {
+    "passed": 118,
+    "failed": 2,
+    "endToEndPassRatePct": 98.33,
+    "intentCorrect": 118,
+    "intentAccuracyPct": 98.33
+  },
+  "fieldValidation": {
+    "evaluated": 56,
+    "ready": 54,
+    "readyRatePct": 96.43,
+    "note": "Uses the existing case-level field validation result; it is not a per-field micro-average."
+  },
+  "emergency": {
+    "support": 17,
+    "recalled": 17,
+    "recallPct": 100
+  },
+  "latencyMs": {
+    "average": 871.39,
+    "p50": 0,
+    "p95": 3170,
+    "p99": 3422,
+    "maximum": 4503,
+    "overEightSeconds": 0,
+    "overEightSecondsRatePct": 0
+  },
+  "failureTaxonomy": {
+    "intentMismatch": 2,
+    "fieldValidation": 0,
+    "executionError": 0,
+    "failedCaseIds": [
+      "glucose-21",
+      "reminder-14"
+    ]
+  },
+  "byIntent": [
+    {
+      "label": "create_reminder",
+      "support": 30,
+      "predicted": 29,
+      "truePositive": 29,
+      "precision": 100,
+      "recall": 96.67,
+      "f1": 98.31
+    },
+    {
+      "label": "emergency_alert",
+      "support": 17,
+      "predicted": 17,
+      "truePositive": 17,
+      "precision": 100,
+      "recall": 100,
+      "f1": 100
+    },
+    {
+      "label": "general_advice",
+      "support": 34,
+      "predicted": 36,
+      "truePositive": 34,
+      "precision": 94.44,
+      "recall": 100,
+      "f1": 97.14
+    },
+    {
+      "label": "generate_meal_plan",
+      "support": 12,
+      "predicted": 12,
+      "truePositive": 12,
+      "precision": 100,
+      "recall": 100,
+      "f1": 100
+    },
+    {
+      "label": "record_glucose",
+      "support": 27,
+      "predicted": 26,
+      "truePositive": 26,
+      "precision": 100,
+      "recall": 96.3,
+      "f1": 98.11
+    }
+  ]
+}

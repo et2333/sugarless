@@ -1,0 +1,96 @@
+{
+  "source": "intent-eval-holdout-report.json",
+  "generatedAt": "2026-09-18T15:14:51.977Z",
+  "sampleCount": 30,
+  "overall": {
+    "passed": 20,
+    "failed": 10,
+    "endToEndPassRatePct": 66.67,
+    "intentCorrect": 21,
+    "intentAccuracyPct": 70
+  },
+  "fieldValidation": {
+    "evaluated": 16,
+    "ready": 11,
+    "readyRatePct": 68.75,
+    "note": "Uses the existing case-level field validation result; it is not a per-field micro-average."
+  },
+  "emergency": {
+    "support": 5,
+    "recalled": 1,
+    "recallPct": 20
+  },
+  "latencyMs": {
+    "average": 1504.97,
+    "p50": 1614,
+    "p95": 3392,
+    "p99": 3469,
+    "maximum": 3469,
+    "overEightSeconds": 0,
+    "overEightSecondsRatePct": 0
+  },
+  "failureTaxonomy": {
+    "intentMismatch": 9,
+    "fieldValidation": 1,
+    "executionError": 0,
+    "failedCaseIds": [
+      "holdout-glucose-01",
+      "holdout-glucose-04",
+      "holdout-reminder-04",
+      "holdout-reminder-06",
+      "holdout-meal-02",
+      "holdout-emergency-01",
+      "holdout-emergency-02",
+      "holdout-emergency-04",
+      "holdout-emergency-05",
+      "holdout-negative-04"
+    ]
+  },
+  "byIntent": [
+    {
+      "label": "create_reminder",
+      "support": 6,
+      "predicted": 4,
+      "truePositive": 4,
+      "precision": 100,
+      "recall": 66.67,
+      "f1": 80
+    },
+    {
+      "label": "emergency_alert",
+      "support": 5,
+      "predicted": 1,
+      "truePositive": 1,
+      "precision": 100,
+      "recall": 20,
+      "f1": 33.33
+    },
+    {
+      "label": "general_advice",
+      "support": 9,
+      "predicted": 12,
+      "truePositive": 8,
+      "precision": 66.67,
+      "recall": 88.89,
+      "f1": 76.19
+    },
+    {
+      "label": "generate_meal_plan",
+      "support": 4,
+      "predicted": 4,
+      "truePositive": 3,
+      "precision": 75,
+      "recall": 75,
+      "f1": 75
+    },
+    {
+      "label": "record_glucose",
+      "support": 6,
+      "predicted": 5,
+      "truePositive": 5,
+      "precision": 100,
+      "recall": 83.33,
+      "f1": 90.91
+    }
+  ]
+}

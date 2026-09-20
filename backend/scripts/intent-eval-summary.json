@@ -1,0 +1,100 @@
+{
+  "source": "intent-eval-report.json",
+  "generatedAt": "2026-09-18T13:23:21.716Z",
+  "sampleCount": 120,
+  "overall": {
+    "passed": 106,
+    "failed": 14,
+    "endToEndPassRatePct": 88.33,
+    "intentCorrect": 109,
+    "intentAccuracyPct": 90.83
+  },
+  "fieldValidation": {
+    "evaluated": 56,
+    "ready": 44,
+    "readyRatePct": 78.57,
+    "note": "Uses the existing case-level field validation result; it is not a per-field micro-average."
+  },
+  "emergency": {
+    "support": 17,
+    "recalled": 17,
+    "recallPct": 100
+  },
+  "latencyMs": {
+    "average": 2454.21,
+    "p50": 2470,
+    "p95": 4116,
+    "p99": 4826,
+    "maximum": 8956,
+    "overEightSeconds": 1,
+    "overEightSecondsRatePct": 0.83
+  },
+  "failureTaxonomy": {
+    "intentMismatch": 11,
+    "fieldValidation": 3,
+    "executionError": 0,
+    "failedCaseIds": [
+      "glucose-02",
+      "glucose-03",
+      "glucose-04",
+      "glucose-08",
+      "glucose-14",
+      "glucose-17",
+      "reminder-02",
+      "reminder-05",
+      "reminder-07",
+      "reminder-13",
+      "reminder-19",
+      "meal-06",
+      "meal-10",
+      "negative-05"
+    ]
+  },
+  "byIntent": [
+    {
+      "label": "create_reminder",
+      "support": 30,
+      "predicted": 27,
+      "truePositive": 27,
+      "precision": 100,
+      "recall": 90,
+      "f1": 94.74
+    },
+    {
+      "label": "emergency_alert",
+      "support": 17,
+      "predicted": 17,
+      "truePositive": 17,
+      "precision": 100,
+      "recall": 100,
+      "f1": 100
+    },
+    {
+      "label": "general_advice",
+      "support": 34,
+      "predicted": 45,
+      "truePositive": 34,
+      "precision": 75.56,
+      "recall": 100,
+      "f1": 86.08
+    },
+    {
+      "label": "generate_meal_plan",
+      "support": 12,
+      "predicted": 10,
+      "truePositive": 10,
+      "precision": 100,
+      "recall": 83.33,
+      "f1": 90.91
+    },
+    {
+      "label": "record_glucose",
+      "support": 27,
+      "predicted": 21,
+      "truePositive": 21,
+      "precision": 100,
+      "recall": 77.78,
+      "f1": 87.5
+    }
+  ]
+}
