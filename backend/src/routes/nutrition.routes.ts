@@ -110,10 +110,10 @@ router.get('/stats', async (req: AuthRequest, res) => {
     fat: 65,
     fiber: 30
   };
-  
+
   // 如果用户有自定义目标，使用用户的目标
-  if (profile && profile.nutritionGoals) {
-    const goals = JSON.parse(profile.nutritionGoals as string);
+  if (profile?.nutritionGoals) {
+    const goals = JSON.parse(profile.nutritionGoals);
     if (goals.dailyCalories) nutritionGoals.calories = goals.dailyCalories;
     if (goals.carbohydrates?.max) nutritionGoals.carbs = goals.carbohydrates.max;
     if (goals.protein?.max) nutritionGoals.protein = goals.protein.max;

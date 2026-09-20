@@ -845,17 +845,16 @@ router.get('/responses/recent', async (req: AuthRequest, res) => {
       snoozeDuration: r.snoozeDuration,
       responseDelay: r.responseDelay,
       // attach readable content for UI - prioritize content field, then title, then message
-      content: r.reminder?.content || 
-               r.reminder?.title || 
-               r.reminder?.message || 
-               r.reminder?.type || 
+      content: r.reminder?.title ||
+               r.reminder?.message ||
+               r.reminder?.type ||
                'Reminder',
       type: r.reminder?.type || 'other',
       category: r.reminder?.type || 'other',
       // Include full reminder object for detailed access
       reminder: r.reminder ? {
         id: r.reminder.id,
-        content: r.reminder.content,
+        content: r.reminder.message,
         message: r.reminder.message,
         title: r.reminder.title,
         type: r.reminder.type,

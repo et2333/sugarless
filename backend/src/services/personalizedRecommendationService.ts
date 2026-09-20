@@ -126,7 +126,10 @@ async function analyzeWithAI(
 ): Promise<AIAnalysisResult> {
   try {
     const { GoogleGenerativeAI } = await import('@google/generative-ai');
-    const apiKey = process.env.GEMINI_API_KEY || 'REMOVED_GEMINI_API_KEY';
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('GEMINI_API_KEY is not configured');
+    }
     const genAI = new GoogleGenerativeAI(apiKey);
     
     const modelNames = ['gemini-2.0-flash-exp', 'gemini-2.0-flash', 'gemini-1.5-pro', 'gemini-pro'];
@@ -411,7 +414,7 @@ async function matchProductsFromDB(
         },
         dosage: aiRec.dosage || supplement.dosage || 'As directed',
         price: supplement.averagePrice || 0,
-        averagePrice: supplement.averagePrice,
+        averagePrice: supplement.averagePrice ?? undefined,
         inStock: supplement.isActive !== false,
         manufacturer: supplement.nameEn || supplement.name,
         imageUrl: supplement.imageUrl || undefined,
@@ -457,7 +460,7 @@ async function matchProductsFromDB(
         price: product.price,
         averagePrice: product.price,
         inStock: product.inStock,
-        brand: product.brand,
+        brand: product.brand ?? undefined,
         vendor: product.vendor,
         imageUrl: product.imageUrl || undefined,
         description: product.description || 'Product for diabetes management',

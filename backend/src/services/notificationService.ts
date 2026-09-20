@@ -68,7 +68,7 @@ export class NotificationService {
       notifications.push(notification);
 
       // Send through appropriate channel
-      await this.sendThroughChannel(notification, channel);
+      await this.sendThroughChannel(notification, channel as NotificationChannel);
     }
 
     return notifications;
@@ -279,7 +279,7 @@ export class NotificationService {
           await this.updateNotificationStatus(notification.id, 'delivered');
           break;
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(`Failed to send notification through ${channel.type}:`, error);
       await this.updateNotificationStatus(notification.id, 'failed', error.message);
     }

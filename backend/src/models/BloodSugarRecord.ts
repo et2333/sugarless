@@ -49,7 +49,7 @@ export interface BloodSugarInsight {
   type: 'high' | 'low' | 'trend' | 'pattern' | 'recommendation';
   severity: 'low' | 'medium' | 'high' | 'critical';
   message: string;
-  recommendation?: string;
+  recommendation?: string | null;
   confidence: number;
   timestamp: Date;
   data?: any;
@@ -61,11 +61,11 @@ export interface BloodSugarAlert {
   type: 'high_glucose' | 'low_glucose' | 'rapid_change' | 'pattern_anomaly';
   severity: 'low' | 'medium' | 'high' | 'critical';
   message: string;
-  value?: number;
-  threshold?: number;
+  value?: number | null;
+  threshold?: number | null;
   timestamp: Date;
   acknowledged: boolean;
-  acknowledgedAt?: Date;
+  acknowledgedAt?: Date | null;
   actions?: Array<{
     type: 'medication' | 'exercise' | 'meal' | 'contact_doctor';
     description: string;

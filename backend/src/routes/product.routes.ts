@@ -665,7 +665,10 @@ router.post('/smart-search', authenticate, async (req: AuthRequest, res) => {
 async function analyzeUserQueryWithAI(query: string, profile: any | null): Promise<any> {
   try {
     const { GoogleGenerativeAI } = await import('@google/generative-ai');
-    const apiKey = process.env.GEMINI_API_KEY || 'REMOVED_GEMINI_API_KEY';
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('GEMINI_API_KEY is not configured');
+    }
     const genAI = new GoogleGenerativeAI(apiKey);
     
     const modelNames = ['gemini-2.0-flash-exp', 'gemini-2.0-flash', 'gemini-1.5-pro', 'gemini-pro'];
@@ -713,7 +716,7 @@ Respond in JSON format (valid JSON only, no markdown):
   "neededProducts": ["glucose meter", "test strips"],
   "recommendedCategories": ["Vitamin C supplements", "Multivitamins with Vitamin C", "Immune support"],
   "diabetesConsiderations": ["Does not affect blood sugar", "Boosts immune system", "Important for wound healing in diabetes"],
-  "reasoning": "Based on your query '${query}', AI identified that you ${identifiedNeed}. For diabetes patients, ${diabetesConsiderations.join(', ')}. We recommend ${recommendedCategories.join(', ')} to address your needs.",
+  "reasoning": "Explain how the recommended products address the user's query, why they fit the identified health need, and what diabetes-specific benefits or cautions the user should consider.",
   "diabetesRelevance": "Detailed explanation of how this relates to diabetes management (2-3 sentences)",
   "searchSuggestions": ["Vitamin C 1000mg", "Vitamin C with Zinc", "Ester-C", "Liposomal Vitamin C", "Vitamin C chewable tablets"]
 }

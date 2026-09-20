@@ -5,7 +5,7 @@
  */
 
 import { BaseAgent, AgentContext, AgentResponse } from './core/BaseAgent';
-import { Tool } from '@langchain/core/tools';
+import { DynamicTool } from '@langchain/core/tools';
 import { LLMChain } from 'langchain/chains';
 import { PromptTemplate } from '@langchain/core/prompts';
 import prisma from '../utils/prisma';
@@ -64,7 +64,7 @@ export class RecommendationAgent extends BaseAgent {
 
   private initializeTools() {
     this.tools = [
-      new Tool({
+      new DynamicTool({
         name: 'get_user_health_data',
         description: 'Get comprehensive user health data including profile, medications, and history',
         func: async () => {
@@ -86,7 +86,7 @@ export class RecommendationAgent extends BaseAgent {
         },
       }),
 
-      new Tool({
+      new DynamicTool({
         name: 'search_supplements',
         description: 'Search supplements database with filters',
         func: async (input: string) => {
@@ -106,7 +106,7 @@ export class RecommendationAgent extends BaseAgent {
         },
       }),
 
-      new Tool({
+      new DynamicTool({
         name: 'check_drug_interactions',
         description: 'Check for drug interactions with supplements',
         func: async (input: string) => {
@@ -140,7 +140,7 @@ export class RecommendationAgent extends BaseAgent {
         },
       }),
 
-      new Tool({
+      new DynamicTool({
         name: 'get_pricing_info',
         description: 'Get current pricing information for supplements',
         func: async (input: string) => {
@@ -165,7 +165,7 @@ export class RecommendationAgent extends BaseAgent {
         },
       }),
 
-      new Tool({
+      new DynamicTool({
         name: 'save_recommendations',
         description: 'Save generated recommendations to database',
         func: async (input: string) => {
@@ -247,7 +247,7 @@ export class RecommendationAgent extends BaseAgent {
           items: scoredRecommendations,
           summary: {
             totalItems: scoredRecommendations.length,
-            strongRecommendations: scoredRecommendations.filter(r => r.strength === 'strong').length,
+            strongRecommendations: scoredRecommendations.filter((r: any) => r.strength === 'strong').length,
             averageConfidence: recommendations.confidence,
           },
         },

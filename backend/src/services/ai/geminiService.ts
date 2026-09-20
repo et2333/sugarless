@@ -61,7 +61,7 @@ class GeminiService {
    */
   private static initializeClient(): void {
     if (!this.genAI) {
-      const apiKey = process.env.GEMINI_API_KEY || 'REMOVED_GEMINI_API_KEY';
+      const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey) {
         throw new AppError('GEMINI_API_KEY未配置', 500, 'MISSING_GEMINI_API_KEY');
       }
@@ -91,7 +91,7 @@ class GeminiService {
         console.log(`Using model: ${modelName}`);
         modelInitialized = true;
         break;
-      } catch (error) {
+      } catch (error: any) {
         console.log(`${modelName} failed, trying next model:`, error.message);
         continue;
       }

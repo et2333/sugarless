@@ -5,7 +5,7 @@
  */
 
 import { BaseAgent, AgentContext, AgentResponse } from './core/BaseAgent';
-import { Tool } from '@langchain/core/tools';
+import { DynamicTool } from '@langchain/core/tools';
 import { LLMChain } from 'langchain/chains';
 import { PromptTemplate } from '@langchain/core/prompts';
 import prisma from '../utils/prisma';
@@ -48,7 +48,7 @@ export class DietAgent extends BaseAgent {
 
   private initializeTools() {
     this.tools = [
-      new Tool({
+      new DynamicTool({
         name: 'get_user_profile',
         description: 'Get user health profile including diabetes type and dietary restrictions',
         func: async () => {
@@ -57,7 +57,7 @@ export class DietAgent extends BaseAgent {
         },
       }),
       
-      new Tool({
+      new DynamicTool({
         name: 'search_recipes',
         description: 'Search for diabetes-friendly recipes based on criteria',
         func: async (input: string) => {
@@ -75,7 +75,7 @@ export class DietAgent extends BaseAgent {
         },
       }),
 
-      new Tool({
+      new DynamicTool({
         name: 'calculate_nutrition',
         description: 'Calculate nutritional values for meal combinations',
         func: async (input: string) => {
@@ -93,7 +93,7 @@ export class DietAgent extends BaseAgent {
         },
       }),
 
-      new Tool({
+      new DynamicTool({
         name: 'save_meal_plan',
         description: 'Save generated meal plan to database',
         func: async (input: string) => {

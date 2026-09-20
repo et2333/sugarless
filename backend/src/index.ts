@@ -1,4 +1,4 @@
-import express from 'express';
+﻿import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import 'express-async-errors';
@@ -33,7 +33,7 @@ import testSmsRoutes from './routes/test-sms.routes';
 import testStripeRoutes from './routes/test-stripe.routes';
 import aiRoutes from './routes/ai.routes';
 
-// 导入中间�?
+// 导入中间件
 import { errorHandler } from './middleware/errorHandler';
 import { notFoundHandler } from './middleware/notFoundHandler';
 import { EmailService } from './services/emailService';
@@ -42,22 +42,22 @@ import { PaymentService } from './services/paymentService';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// 初始化服�?
+// 初始化服务
 try {
   EmailService.initialize();
-  console.log('�?EmailService initialized');
+  console.log('✅ EmailService initialized');
 } catch (error) {
   console.warn('⚠️ EmailService initialization failed:', (error as Error).message);
 }
 
 try {
   PaymentService.initialize();
-  console.log('�?PaymentService initialized');
+  console.log('✅ PaymentService initialized');
 } catch (error) {
   console.warn('⚠️ PaymentService initialization failed:', (error as Error).message);
 }
 
-// 中间�?
+// 中间件
 app.use(helmet());
 app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
@@ -66,7 +66,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 健康检�?
+// 健康检查
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'ok', 
@@ -130,9 +130,9 @@ app.get('/api-docs', (req, res) => {
       ai: {
         'POST /api/ai/chat': 'AI健康助手对话',
         'GET /api/ai/chat/history': '获取对话历史',
-        'GET /api/ai/quick-replies': '获取快速回复建�?,
-        'POST /api/ai/transcribe': '语音转文�?,
-        'GET /api/ai/status': '获取AI服务状�?
+        'GET /api/ai/quick-replies': '获取快速回复建议',
+        'POST /api/ai/transcribe': '语音转文字',
+        'GET /api/ai/status': '获取AI服务状态'
       }
     }
   });
@@ -144,11 +144,11 @@ app.use(notFoundHandler);
 // 错误处理
 app.use(errorHandler);
 
-// 启动服务�?
+// 启动服务器
 app.listen(PORT, () => {
   console.log(`🚀 服务器运行在 http://localhost:${PORT}`);
   console.log(`📚 API文档: http://localhost:${PORT}/api-docs`);
-  console.log(`🏥 健康检�? http://localhost:${PORT}/health`);
+  console.log(`🏥 健康检查: http://localhost:${PORT}/health`);
   console.log(`🌍 环境: ${process.env.NODE_ENV || 'development'}`);
 });
 

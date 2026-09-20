@@ -10,18 +10,18 @@ import prisma from '../utils/prisma';
 
 export interface CalendarCredentials {
   accessToken: string;
-  refreshToken?: string;
-  expiresAt?: Date;
-  calendarId?: string;
+  refreshToken?: string | null;
+  expiresAt?: Date | null;
+  calendarId?: string | null;
 }
 
 export interface CalendarEvent {
   id: string;
   title: string;
-  description?: string;
+  description?: string | null;
   startTime: Date;
   endTime: Date;
-  location?: string;
+  location?: string | null;
   attendees?: Array<{
     email: string;
     name?: string;
@@ -37,7 +37,7 @@ export interface CalendarEvent {
     endDate?: Date;
   };
   source: 'google' | 'outlook' | 'apple';
-  externalId?: string;
+  externalId?: string | null;
 }
 
 export interface CalendarSyncResult {
@@ -679,7 +679,7 @@ export class CalendarService {
       // 创建事件
       const response = await calendar.events.insert({
         calendarId: credentials.calendarId || 'primary',
-        resource: googleEvent,
+        requestBody: googleEvent,
       });
 
       return response.data.id || '';

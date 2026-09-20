@@ -77,6 +77,7 @@ model Profile {
   // 饮食限制（JSON数组）
   allergies     String   @default("[]") // JSON array
   dietaryPrefs  String   @default("[]") // JSON array
+  nutritionGoals String? // JSON: dailyCalories, carbohydrates, protein, fat, fiber
   
   // 生活方式
   activityLevel String   @default("moderate")
@@ -510,6 +511,7 @@ model Comment {
   id         String   @id @default(uuid())
   postId     String
   userId     String
+  parentId   String?
   authorName String
   content    String
   
@@ -519,7 +521,10 @@ model Comment {
   // 关系
   post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent     Comment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies    Comment[] @relation("CommentReplies")
   
+  @@index([parentId])
   @@map("comments")
 }
 
@@ -718,6 +723,8 @@ model Supplement {
   // 基本信息
   name        String   // "维生素D3", "Omega-3鱼油"
   nameEn      String?
+  description String?
+  descriptionEn String?
   type        String   // vitamin, mineral, herbal, amino_acid, other
   category    String   // 血糖控制、心血管健康、神经保护等
   

@@ -130,6 +130,8 @@ router.post('/consultation', async (req: AuthRequest, res) => {
     const consultation = await DoctorService.bookConsultation({
       patientId: req.user!.userId,
       ...data,
+      symptoms: data.symptoms || [],
+      medications: data.medications || [],
     });
 
     res.status(201).json({

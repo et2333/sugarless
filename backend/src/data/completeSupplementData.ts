@@ -31,7 +31,7 @@ export interface CompleteSupplementData {
       year: number;
       participants?: string;
       duration?: string;
-      results: string;
+      results?: string;
       findings?: string;
       conclusion?: string;
       source: string;

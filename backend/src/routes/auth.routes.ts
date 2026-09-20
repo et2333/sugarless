@@ -1,4 +1,4 @@
-import { Router } from 'express';
+﻿import { Router } from 'express';
 import { z } from 'zod';
 import prisma from '../utils/prisma';
 import { hashPassword, comparePassword } from '../utils/password';
@@ -14,16 +14,16 @@ const router = Router();
 // 注册验证schema
 const registerSchema = z.object({
   email: z.string().email('无效的邮箱地址'),
-  password: z.string().min(8, '密码至少8�?).max(50),
-  firstName: z.string().min(1, '请输入名�?),
-  lastName: z.string().min(1, '请输入姓�?),
+  password: z.string().min(8, '密码至少8位').max(50),
+  firstName: z.string().min(1, '请输入名字'),
+  lastName: z.string().min(1, '请输入姓氏'),
   role: z.enum(['user', 'merchant', 'admin']).optional()
 });
 
 // 登录验证schema
 const loginSchema = z.object({
   email: z.string().email('无效的邮箱地址'),
-  password: z.string().min(1, '请输入密�?)
+  password: z.string().min(1, '请输入密码')
 });
 
 // 注册
@@ -36,7 +36,7 @@ router.post('/register', async (req, res) => {
   });
   
   if (existingUser) {
-    throw new AppError('该邮箱已被注�?, 400, 'EMAIL_EXISTS');
+    throw new AppError('该邮箱已被注册', 400, 'EMAIL_EXISTS');
   }
   
   // 创建用户
@@ -49,16 +49,17 @@ router.post('/register', async (req, res) => {
     }
   });
   
-  // 发送欢迎邮�?
+  // 发送欢迎邮件
   try {
     await EmailService.sendWelcomeEmail(email, firstName);
     console.log(`欢迎邮件已发送到: ${email}`);
   } catch (error: any) {
-    console.error('发送欢迎邮件失�?', error.message);
-    // 不阻止注册流程，只记录错�?
+    console.error('发送欢迎邮件失败:', error.message);
+    // 不阻止注册流程，只记录错误
   }
   
-  // 生成邮箱验证令牌并通过 SendGrid 发送验证邮�?  try {
+  // 生成邮箱验证令牌并通过 SendGrid 发送验证邮件
+  try {
     const verifyToken = crypto.randomBytes(32).toString('hex');
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24小时
 
@@ -76,18 +77,19 @@ router.post('/register', async (req, res) => {
         <p style=\"text-align:center; margin: 24px 0;\">
           <a href=\"${verifyUrl}\" style=\"background:#4F46E5;color:#fff;padding:12px 20px;border-radius:6px;text-decoration:none;\">立即验证邮箱</a>
         </p>
-        <p>如果按钮无法点击，请复制以下链接到浏览器打开�?/p>
+        <p>如果按钮无法点击，请复制以下链接到浏览器打开：</p>
         <p><a href=\"${verifyUrl}\">${verifyUrl}</a></p>
-        <p style=\"color:#666;font-size:12px;\">该链�?4小时内有效�?/p>
+        <p style=\"color:#666;font-size:12px;\">该链�?4小时内有效�?/p>
       </div>
     `;
-    const text = `请打开以下链接完成邮箱验证�?4小时内有效）：\\n${verifyUrl}`;
+    const text = `请打开以下链接完成邮箱验证�?4小时内有效）：\\n${verifyUrl}`;
     await SendGridService.send({ to: email, subject, html, text });
   } catch (error: any) {
-    console.error('发送验证邮件失�?', error?.message || error);
+    console.error('发送验证邮件失败:', error?.message || error);
   }
   
-  // 强制邮箱未验证用户禁止登�?  if (!user.emailVerified) {
+  // 注册流程暂不阻止未验证用户获取初始 token
+  if (!user.emailVerified) {
     // no-op in register flow
   }
 
@@ -122,17 +124,18 @@ router.post('/login', async (req, res) => {
   });
   
   if (!user) {
-    throw new AppError('邮箱或密码错�?, 401, 'INVALID_CREDENTIALS');
+    throw new AppError('邮箱或密码错误', 401, 'INVALID_CREDENTIALS');
   }
   
   // 验证密码
   const isValidPassword = await comparePassword(password, user.passwordHash);
   
   if (!isValidPassword) {
-    throw new AppError('邮箱或密码错�?, 401, 'INVALID_CREDENTIALS');
+    throw new AppError('邮箱或密码错误', 401, 'INVALID_CREDENTIALS');
   }
   
-  // 强制邮箱未验证用户禁止登�?  if (!user.emailVerified) {
+  // 强制邮箱未验证用户禁止登录
+  if (!user.emailVerified) {
     throw new AppError('邮箱未验证，请先完成验证', 403, 'EMAIL_NOT_VERIFIED');
   }
 
@@ -143,7 +146,7 @@ router.post('/login', async (req, res) => {
     role: user.role
   });
   
-  // 更新最后登录时�?
+  // 更新最后登录时间
   await prisma.user.update({
     where: { id: user.id },
     data: { updatedAt: new Date() }
@@ -178,7 +181,7 @@ router.get('/me', authenticate, async (req: AuthRequest, res) => {
   });
   
   if (!user) {
-    throw new AppError('用户不存�?, 404, 'USER_NOT_FOUND');
+    throw new AppError('用户不存在', 404, 'USER_NOT_FOUND');
   }
   
   res.json({
@@ -187,7 +190,8 @@ router.get('/me', authenticate, async (req: AuthRequest, res) => {
   });
 });
 
-// 邮箱验证（通过 token�?router.get('/verify', async (req, res) => {
+// 邮箱验证（通过 token）
+router.get('/verify', async (req, res) => {
   const token = String(req.query.token || '');
   if (!token) {
     throw new AppError('缺少验证令牌', 400, 'TOKEN_REQUIRED');
@@ -195,13 +199,13 @@ router.get('/me', authenticate, async (req: AuthRequest, res) => {
 
   const record = await prisma.emailVerificationToken.findUnique({ where: { token } });
   if (!record) {
-    throw new AppError('无效的验证令�?, 400, 'TOKEN_INVALID');
+    throw new AppError('无效的验证令牌', 400, 'TOKEN_INVALID');
   }
   if (record.usedAt) {
-    throw new AppError('验证令牌已使�?, 400, 'TOKEN_USED');
+    throw new AppError('验证令牌已使用', 400, 'TOKEN_USED');
   }
   if (record.expiresAt.getTime() < Date.now()) {
-    throw new AppError('验证令牌已过�?, 400, 'TOKEN_EXPIRED');
+    throw new AppError('验证令牌已过期', 400, 'TOKEN_EXPIRED');
   }
 
   await prisma.$transaction([
@@ -212,15 +216,16 @@ router.get('/me', authenticate, async (req: AuthRequest, res) => {
   res.json({ success: true, message: '邮箱验证成功' });
 });
 
-// 重新发送验证邮�?const resendSchema = z.object({ email: z.string().email('无效的邮箱地址') });
+// 重新发送验证邮件
+const resendSchema = z.object({ email: z.string().email('无效的邮箱地址') });
 router.post('/resend-verification', async (req, res) => {
   const { email } = resendSchema.parse(req.body);
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) {
-    return res.json({ success: true, message: '如果邮箱存在，将发送验证邮�? });
+    return res.json({ success: true, message: '如果邮箱存在，将发送验证邮件' });
   }
   if (user.emailVerified) {
-    return res.json({ success: true, message: '邮箱已完成验�? });
+    return res.json({ success: true, message: '邮箱已完成验证' });
   }
 
   const verifyToken = crypto.randomBytes(32).toString('hex');
@@ -237,12 +242,12 @@ router.post('/resend-verification', async (req, res) => {
       <p style=\"text-align:center; margin: 24px 0;\">
         <a href=\"${verifyUrl}\" style=\"background:#4F46E5;color:#fff;padding:12px 20px;border-radius:6px;text-decoration:none;\">立即验证邮箱</a>
       </p>
-      <p>如果按钮无法点击，请复制以下链接到浏览器打开�?/p>
+      <p>如果按钮无法点击，请复制以下链接到浏览器打开：</p>
       <p><a href=\"${verifyUrl}\">${verifyUrl}</a></p>
-      <p style=\"color:#666;font-size:12px;\">该链�?4小时内有效�?/p>
+      <p style=\"color:#666;font-size:12px;\">该链�?4小时内有效�?/p>
     </div>
   `;
-  const text = `请打开以下链接完成邮箱验证�?4小时内有效）：\\n${verifyUrl}`;
+  const text = `请打开以下链接完成邮箱验证�?4小时内有效）：\\n${verifyUrl}`;
 
   await SendGridService.send({ to: email, subject, html, text });
   res.json({ success: true, message: '验证邮件已发送（如邮箱存在）' });

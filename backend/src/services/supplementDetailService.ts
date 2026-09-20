@@ -158,7 +158,7 @@ function mergeSupplementData(dbSupplement: any | null, completeData: CompleteSup
               : dbSupplement.dosage)
           : 'As directed',
         form: 'Capsules/Tablets',
-        description: 'Supplement for diabetes management',
+        description: dbSupplement.descriptionEn || dbSupplement.description || 'Supplement for diabetes management',
         price: dbSupplement.averagePrice || 0,
         packSize: '60 capsules',
       },
