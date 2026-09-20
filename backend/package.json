@@ -15,7 +15,12 @@
     "db:seed:basic": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
     "db:studio": "prisma studio",
-    "db:init": "npm run db:generate && npm run db:migrate && npm run db:seed"
+    "db:init": "npm run db:generate && npm run db:migrate && npm run db:seed",
+    "eval:intent": "tsx scripts/evaluate-intent-accuracy.ts",
+    "eval:intent:holdout": "tsx scripts/evaluate-intent-accuracy.ts",
+    "eval:intent:summarize": "tsx scripts/summarize-intent-eval.ts",
+    "test:intent-router": "tsx scripts/test-intent-router.ts",
+    "eval:intent:generate": "tsx scripts/generate-intent-eval-cases.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed-all.ts"
@@ -54,6 +59,7 @@
     "@types/node": "^20.10.5",
     "prisma": "^6.18.0",
     "tsx": "^4.7.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "undici": "^8.5.0"
   }
 }

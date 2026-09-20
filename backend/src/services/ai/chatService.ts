@@ -15,10 +15,13 @@ import {
   getEmergencyResponse,
   SupportedLanguage 
 } from '../../utils/languageDetector';
+import { getCachedContext, setCachedContext } from '../../utils/contextCache';
+import { normalizeActionData } from '../../utils/actionNormalizer';
+import { tryRuleBasedIntent } from '../../utils/intentRouter';
 
 // 初始化AI服务
-const apiKey = process.env.GEMINI_API_KEY || 'REMOVED_GEMINI_API_KEY';
-const assemblyApiKey = process.env.ASSEMBLYAI_API_KEY || 'REMOVED_ASSEMBLYAI_API_KEY';
+const apiKey = process.env.GEMINI_API_KEY || '';
+const assemblyApiKey = process.env.ASSEMBLYAI_API_KEY || '';
 
 if (!apiKey) {
   console.error('GEMINI_API_KEY not configured');
@@ -65,53 +68,56 @@ class ChatService {
   private static model: any = null;
 
   private static initializeModel() {
-    // 强制重新初始化模型，确保使用最新的配置
-    this.model = null;
-    
-    if (!this.model) {
-      const apiKey = process.env.GEMINI_API_KEY || 'REMOVED_GEMINI_API_KEY';
-      if (!apiKey) {
-        throw new AppError('GEMINI_API_KEY未配置', 500, 'MISSING_GEMINI_API_KEY');
+    if (this.model) {
+      return;
+    }
+
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new AppError('GEMINI_API_KEY未配置', 500, 'MISSING_GEMINI_API_KEY');
+    }
+
+    console.log('正在初始化Gemini模型，API Key:', apiKey ? '已设置' : '未设置');
+
+    try {
+      const currentGenAI = new GoogleGenerativeAI(apiKey);
+
+      const modelsToTry = process.env.GEMINI_MODEL
+        ? [process.env.GEMINI_MODEL]
+        : [
+            'gemini-2.5-flash',
+            'gemini-2.0-flash',
+            'gemini-2.5-pro',
+            'gemini-1.5-flash',
+            'gemini-1.5-pro',
+          ];
+
+      let modelInitialized = false;
+      for (const modelName of modelsToTry) {
+        try {
+          this.model = currentGenAI.getGenerativeModel({
+            model: modelName,
+            generationConfig: {
+              temperature: 0.2,
+              maxOutputTokens: 512,
+              responseMimeType: 'application/json',
+            },
+          });
+          console.log(`Successfully initialized model: ${modelName}`);
+          modelInitialized = true;
+          break;
+        } catch (error: any) {
+          console.log(`Failed to initialize ${modelName}, trying next...`, error.message);
+        }
       }
 
-      console.log('正在初始化Gemini模型，API Key:', apiKey ? '已设置' : '未设置');
-
-      try {
-        // 重新创建genAI实例确保使用正确的API密钥
-        const currentGenAI = new GoogleGenerativeAI(apiKey);
-        
-        // 使用最新的可用模型，按优先级尝试
-        const modelsToTry = [
-          "gemini-2.0-flash-exp",      // 最新实验版本
-          "gemini-2.0-flash",          // 最新稳定版本
-          "gemini-2.5-flash",          // 2.5版本 flash
-          "gemini-2.5-pro",            // 2.5版本 pro
-          "gemini-1.5-flash",          // fallback 1
-          "gemini-1.5-pro"             // fallback 2
-        ];
-
-        let modelInitialized = false;
-        for (const modelName of modelsToTry) {
-          try {
-            this.model = currentGenAI.getGenerativeModel({ 
-              model: modelName
-            });
-            console.log(`Successfully initialized model: ${modelName}`);
-            modelInitialized = true;
-            break;
-          } catch (error: any) {
-            console.log(`Failed to initialize ${modelName}, trying next...`, error.message);
-          }
-        }
-
-        if (!modelInitialized) {
-          console.error('All Gemini models failed to initialize');
-          throw new Error('无法初始化任何Gemini模型');
-        }
-      } catch (error) {
-        console.error('Failed to initialize Gemini model:', error);
-        throw error;
+      if (!modelInitialized) {
+        console.error('All Gemini models failed to initialize');
+        throw new Error('无法初始化任何Gemini模型');
       }
+    } catch (error) {
+      console.error('Failed to initialize Gemini model:', error);
+      throw error;
     }
   }
 
@@ -122,7 +128,10 @@ class ChatService {
   static async transcribeAudio(audioUrl: string, language?: string): Promise<string> {
     try {
       // 确保使用正确的AssemblyAI API密钥
-      const assemblyApiKey = process.env.ASSEMBLYAI_API_KEY || 'REMOVED_ASSEMBLYAI_API_KEY';
+      const assemblyApiKey = process.env.ASSEMBLYAI_API_KEY;
+      if (!assemblyApiKey) {
+        throw new AppError('ASSEMBLYAI_API_KEY未配置', 500, 'MISSING_ASSEMBLYAI_API_KEY');
+      }
       const currentAssemblyAI = new AssemblyAI({ apiKey: assemblyApiKey });
       
       // 确定语言代码（支持中英文）
@@ -194,33 +203,32 @@ class ChatService {
    * 获取用户上下文数据
    */
   private static async getUserContext(userId: string): Promise<ChatContext> {
+    const cached = getCachedContext(userId);
+    if (cached) {
+      return cached as ChatContext;
+    }
+
     try {
-      // 获取用户档案
-      const profile = await prisma.profile.findUnique({
-        where: { userId },
-      });
+      const [profile, recentGlucose, medications] = await Promise.all([
+        prisma.profile.findUnique({ where: { userId } }),
+        prisma.bloodSugarRecord.findMany({
+          where: { userId },
+          orderBy: { measurementTime: 'desc' },
+          take: 3,
+        }),
+        prisma.medication.findMany({
+          where: { userId, isActive: true },
+        }),
+      ]);
 
-      // 获取最近血糖记录
-      const recentGlucose = await prisma.bloodSugarRecord.findMany({
-        where: { userId },
-        orderBy: { measurementTime: 'desc' },
-        take: 10,
-      });
-
-      // 获取用药信息
-      const medications = await prisma.medication.findMany({
-        where: { 
-          userId,
-          isActive: true 
-        },
-      });
-
-      return {
+      const context: ChatContext = {
         userId,
         userProfile: profile,
         recentGlucose,
         medications,
       };
+      setCachedContext(userId, context);
+      return context;
     } catch (error) {
       console.error('获取用户上下文失败:', error);
       return { userId };
@@ -239,8 +247,24 @@ class ChatService {
       
       console.log('检测到语言 / Detected language:', detectedLanguage);
 
+      // Keep safety checks and high-confidence actions deterministic. This path
+      // also avoids an unnecessary model call for common health-management tasks.
+      if (detectEmergencyMultilang(message, detectedLanguage)) {
+        const emergency = getEmergencyResponse(detectedLanguage);
+        return {
+          response: emergency.response,
+          action: { type: 'emergency_alert', data: {} },
+          suggestions: emergency.suggestions,
+        };
+      }
+
+      const ruleBasedResult = tryRuleBasedIntent(message, detectedLanguage);
+      if (ruleBasedResult) {
+        return ruleBasedResult;
+      }
+
       // 检查API密钥
-      const apiKey = process.env.GEMINI_API_KEY || 'REMOVED_GEMINI_API_KEY';
+      const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey) {
         console.error('GEMINI_API_KEY not configured');
         throw new AppError('AI服务配置错误', 500, 'AI_CONFIG_ERROR');
@@ -412,6 +436,10 @@ ${detectedLanguage === 'zh'
 - dosage: [仅medication类型] 剂量（**必须使用英文或数字格式**，如"500mg"或"500 mg"）
 - meal_timing: [仅medication类型] 与用餐关系（**必须使用英文**，如"before meal"、"after meal"、"with meal"）
 
+如果用户要求生成膳食计划/餐单/食谱（如"生成餐单"、"膳食计划"、"meal plan"、"create meal plan"），action.type应该是"generate_meal_plan"，data可包含：
+- days: 天数（数字，默认7）
+- preferences: 饮食偏好（可选字符串）
+
 **重要：即使用户用中文输入，所有字段都必须输出为英文！**
 
 示例：
@@ -451,6 +479,10 @@ If user requests a reminder, action.type should be "create_reminder", data shoul
 - medication_name: [medication type only] Medication name (**MUST be in English**, even if user input is Chinese, translate it, e.g., "维C"→"Vitamin C")
 - dosage: [medication type only] Dosage (**MUST be in English/number format**, e.g., "500mg" or "500 mg")
 - meal_timing: [medication type only] Meal relation (**MUST be in English**, e.g., "before meal", "after meal", "with meal")
+
+If user requests a meal plan (e.g., "generate meal plan", "create a meal plan", "personalized meal plan for diabetes"), action.type should be "generate_meal_plan", data may include:
+- days: Number of days (number, default 7)
+- preferences: Dietary preferences (optional string)
 
 **CRITICAL: Even if user input is in Chinese, ALL fields MUST be output in English!**
 
@@ -498,6 +530,14 @@ Should return:
             }
             
             // 如果action是create_reminder，确保data格式正确
+            if (parsedResponse.action?.type && parsedResponse.action.data) {
+              parsedResponse.action.data = normalizeActionData(
+                parsedResponse.action.type,
+                parsedResponse.action.data,
+                message
+              );
+            }
+
             if (parsedResponse.action && parsedResponse.action.type === 'create_reminder') {
               if (typeof parsedResponse.action.data === 'string') {
                 try {

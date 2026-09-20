@@ -239,13 +239,18 @@ export function detectEmergency(message: string, lang?: SupportedLanguage): bool
   if (isNormalOperation) {
     return false; // 正常操作，不触发紧急情况
   }
+
+  // 归一化常见变体，避免 "blood sugar is below 2" 漏检
+  const normalizedMessage = lowerMessage
+    .replace(/blood\s+sugar\s+is\s+below/g, 'blood sugar below')
+    .replace(/blood\s+glucose\s+is\s+below/g, 'blood glucose below');
   
   // 紧急关键词（更精确的匹配）
   const emergencyKeywords = {
     zh: [
       // 症状相关（需要完整的短语，避免误判）
       '胸痛', '呼吸困难', '无法呼吸', '昏迷', '失去意识', '意识不清',
-      '严重头晕', '持续呕吐', '剧烈疼痛',
+      '严重头晕', '持续呕吐', '剧烈疼痛', '昏倒', '快昏倒',
       // 血糖危机（特定数值或严重描述）
       '严重低血糖', '血糖极低', '血糖低于3', '血糖低于2', '血糖1',
       '高血糖危象', '血糖超过20', '血糖超过25', '酮症酸中毒',
@@ -257,7 +262,9 @@ export function detectEmergency(message: string, lang?: SupportedLanguage): bool
       // 症状相关（完整短语，避免单独关键词误判）
       'chest pain', 'difficulty breathing', 'cannot breathe', 'trouble breathing',
       'unconscious', 'lost consciousness', 'loss of consciousness', 'passed out',
+      'pass out', 'may pass out',
       'severe dizziness', 'continuous vomiting', 'severe pain', 'extreme pain',
+      'feel very weak', 'shaking badly',
       // 血糖危机（特定数值或严重描述）
       'severe hypoglycemia', 'very low blood sugar', 'blood sugar below 3',
       'blood sugar below 2', 'blood sugar 1', 'blood sugar 2',
@@ -270,6 +277,21 @@ export function detectEmergency(message: string, lang?: SupportedLanguage): bool
     ]
   };
 
+  const emergencyPatterns = [
+    /blood\s+sugar\s+below\s+[1-3]/i,
+    /blood\s+glucose\s+below\s+[1-3]/i,
+    /bs\s+below\s+[1-3]/i,
+    /血糖\s*1\.\d+/,
+    /血糖\s*[低于]+\s*[1-3]/,
+    /(?:blood\s+(?:sugar|glucose)|glucose)\s+(?:is\s+)?(?:at\s+)?[1-3](?:\.\d+)?\s*mmol\/l/i,
+    /血糖(?:只有|是|为)?\s*[1-3](?:\.\d+)?(?![\d.])/,
+    /意识.{0,3}不清/,
+    /站不稳/,
+    /blood\s+(?:sugar|glucose)\s+(?:is\s+)?(?:above|over)\s*(?:20|2[5-9]|[3-9]\d)/i,
+    /(?:keep|continuous(?:ly)?)\s+vomiting/i,
+    /昏倒/,
+  ];
+
   const keywords = emergencyKeywords[detectedLang] || emergencyKeywords.en;
   
   // 检查紧急关键词，需要完整匹配或短语匹配
@@ -279,26 +301,31 @@ export function detectEmergency(message: string, lang?: SupportedLanguage): bool
     if (keywordLower.length <= 3) {
       // 使用单词边界或特定上下文
       const regex = new RegExp(`\\b${keywordLower}\\b`, 'i');
-      return regex.test(lowerMessage);
+      return regex.test(normalizedMessage);
     }
     // 对于长短语，直接检查包含关系
-    return lowerMessage.includes(keywordLower);
+    return normalizedMessage.includes(keywordLower);
   });
+
+  const hasEmergencyPattern = emergencyPatterns.some((pattern) =>
+    pattern.test(normalizedMessage) || pattern.test(lowerMessage)
+  );
   
+  const isEmergency = hasEmergencyKeyword || hasEmergencyPattern;
+
   // 额外的上下文检查：如果包含"help"但上下文是正常操作，不触发紧急
-  if (lowerMessage.includes('help') && !hasEmergencyKeyword) {
-    // 检查"help"是否在正常操作的上下文中
+  if (lowerMessage.includes('help') && !isEmergency) {
     const helpInNormalContext = [
       'help me set', 'help me create', 'help me find', 'help me get',
       'help me log', 'help me record', 'can you help', 'could you help'
     ].some(context => lowerMessage.includes(context));
-    
+
     if (helpInNormalContext) {
       return false;
     }
   }
-  
-  return hasEmergencyKeyword;
+
+  return isEmergency;
 }
 
 /**

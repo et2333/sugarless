@@ -10,6 +10,7 @@ import { AppError } from '../middleware/errorHandler';
 import { ChatService } from '../services/ai/chatService';
 import prisma from '../utils/prisma';
 import { detectLanguage, getEmergencyResponse, detectEmergency } from '../utils/languageDetector';
+import { validateActionData } from '../utils/aiActionSchemas';
 
 const router = Router();
 
@@ -105,6 +106,8 @@ router.post('/chat', async (req: AuthRequest, res) => {
             if (typeof glucoseData === 'number') {
               glucoseData = { value: glucoseData };
             }
+
+            glucoseData = validateActionData('record_glucose', glucoseData);
             
             // 确保有必要的字段
             if (!glucoseData || typeof glucoseData.value !== 'number') {
@@ -154,6 +157,8 @@ router.post('/chat', async (req: AuthRequest, res) => {
                 parsedData = { type: 'appointment', title: 'AI助手提醒' };
               }
             }
+
+            parsedData = validateActionData('create_reminder', parsedData);
             
             // 如果是用药提醒，尝试匹配药物数据库
             let matchedMedication = null;
@@ -458,7 +463,7 @@ router.get('/status', async (req: AuthRequest, res) => {
     // 检查Gemini API状态
     let geminiStatus = false;
     try {
-      const apiKey = process.env.GEMINI_API_KEY || 'REMOVED_GEMINI_API_KEY';
+      const apiKey = process.env.GEMINI_API_KEY;
       geminiStatus = !!apiKey;
     } catch (error) {
       console.error('Gemini API配置检查失败:', error);
@@ -467,7 +472,7 @@ router.get('/status', async (req: AuthRequest, res) => {
     // 检查AssemblyAI状态
     let assemblyaiStatus = false;
     try {
-      const assemblyApiKey = process.env.ASSEMBLYAI_API_KEY || 'REMOVED_ASSEMBLYAI_API_KEY';
+      const assemblyApiKey = process.env.ASSEMBLYAI_API_KEY;
       assemblyaiStatus = !!assemblyApiKey;
     } catch (error) {
       console.error('AssemblyAI配置检查失败:', error);
