@@ -3,30 +3,32 @@
  * 改进的语音识别服务，提高准确性
  */
 
+type RecognitionLocale = 'zh-CN' | 'en-US';
+
 class ImprovedSpeechRecognition {
   private recognition: any;
   private isSupported: boolean;
 
-  constructor() {
+  constructor(language: RecognitionLocale = 'en-US') {
     this.isSupported = 'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
     
     if (this.isSupported) {
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       this.recognition = new SpeechRecognition();
-      this.setupRecognition();
+      this.setupRecognition(language);
     }
   }
 
-  private setupRecognition() {
+  private setupRecognition(language: RecognitionLocale) {
     // 关键设置
-    this.recognition.lang = 'en-US'; // 确保英语
+    this.recognition.lang = language;
     this.recognition.continuous = false; // 单次识别
     this.recognition.interimResults = false; // 不要临时结果
     this.recognition.maxAlternatives = 1;
     
     // 提高准确性的设置
     try {
-      if ('webkitSpeechGrammarList' in window || 'SpeechGrammarList' in window) {
+      if (language === 'en-US' && ('webkitSpeechGrammarList' in window || 'SpeechGrammarList' in window)) {
         const SpeechGrammarList = (window as any).webkitSpeechGrammarList || (window as any).SpeechGrammarList;
         const grammar = `#JSGF V1.0;
         grammar health;

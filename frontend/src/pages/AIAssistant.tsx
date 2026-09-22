@@ -68,6 +68,7 @@ interface ChatMessage {
 
 const AIAssistant: React.FC = () => {
   const { t, i18n } = useTranslation();
+  const speechLocale = i18n.resolvedLanguage?.startsWith('zh') ? 'zh-CN' : 'en-US';
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -86,16 +87,13 @@ const AIAssistant: React.FC = () => {
   // Initialize speech recognition and synthesis
   useEffect(() => {
     // Initialize improved speech recognition
-    if (ImprovedSpeechRecognition) {
-      improvedSpeechRecogRef.current = new ImprovedSpeechRecognition();
-      intentParserRef.current = new IntentParser();
-    }
+    intentParserRef.current = new IntentParser();
 
     // Fallback to old recognition for compatibility
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.lang = 'en-US';
+      recognitionRef.current.lang = speechLocale;
       recognitionRef.current.continuous = false;
       recognitionRef.current.interimResults = false;
 
@@ -151,6 +149,15 @@ const AIAssistant: React.FC = () => {
       }
     ]);
   }, []);
+
+  // Keep speech recognition and synthesis aligned with the global UI language.
+  useEffect(() => {
+    improvedSpeechRecogRef.current?.stop();
+    improvedSpeechRecogRef.current = new ImprovedSpeechRecognition(speechLocale);
+    if (recognitionRef.current) recognitionRef.current.lang = speechLocale;
+    voiceService.setLanguage(speechLocale);
+    return () => improvedSpeechRecogRef.current?.stop();
+  }, [speechLocale]);
 
   // Scroll to bottom
   useEffect(() => {
@@ -468,10 +475,11 @@ const AIAssistant: React.FC = () => {
     setIsRecording(false);
   };
 
-  // Speech synthesis using EnglishVoiceService
+  // Speech synthesis follows the global UI language.
   const speakText = (text: string) => {
     try {
       voiceService.speak(text, {
+        language: speechLocale,
         rate: 0.9,
         pitch: 1.0,
         volume: 1.0,
