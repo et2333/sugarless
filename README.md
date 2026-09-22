@@ -1,4 +1,4 @@
-# Diabetes Care Platform
+# SugarLess — Diabetes Care Platform
 
 <div align="center">
 
@@ -8,7 +8,7 @@
 [![TypeScript](https://img.shields.io/badge/typescript-5.3.3-blue)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/react-18.2.0-61dafb)](https://reactjs.org/)
 <br />
-[Quick Start](#quick-start) &middot; [Configuration](#configuration) &middot; [Scrum Framework](#Scrum-Framework) &middot; [Documentation](#documentation) &middot; [Advanced Technologies](#advanced-technologies)
+[Quick Start](#quick-start) &middot; [Configuration](#configuration) &middot; [Scrum Framework](#scrum-framework) &middot; [Documentation](#documentation) &middot; [Advanced Technologies](#advanced-technologies)
 
 </div>
 
@@ -20,7 +20,7 @@ Diabetes Care Platform is a full-stack web application designed to support diabe
 
 ### Key Highlights
 
-- **AI-Powered Health Assistant** - Natural language health consultations and personalized recommendations
+- **AI-Powered Health Assistant** - Safety-first hybrid intent routing, health consultations, and personalized recommendations
 - **Comprehensive Health Tracking** - Blood sugar monitoring, medication management, and activity logging
 - **Smart Adaptive Reminders** - AI-driven reminder system that learns from user behavior
 - **Medication Management** - Inventory tracking, refill alerts, and consumption logs
@@ -223,8 +223,8 @@ Helper script:
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd 5620-Thu-11-13-Group-120
+   git clone https://github.com/et2333/sugarless.git
+   cd sugarless
    ```
 
 2. **Install dependencies**
@@ -301,102 +301,6 @@ Merchant Account:
 ---
 
 
-## Scrum Framework
-
-This project was developed under the **Scrum** framework following the principles taught in *ELEC5620 Topic 8: Agile Software Process Model Practice*.  
-Our team adopted an **adaptive**, **iterative**, and **people-oriented** approach, completing **three sprints across a 3-week development cycle**.  
-The Scrum process ensured continuous integration, rapid feedback, and iterative improvement, enabling the team to balance innovation with deliverable stability.
-
-### Scrum Overview
-
-| Category     | Description |
-|---------------|-------------|
-| **Roles**     | Product Owner, Scrum Master, Development Team |
-| **Artifacts** | Product Backlog, Sprint Backlog, Burndown Charts, Retrospective Notes |
-| **Events**    | Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective |
-| **Iterations**| Three Sprints (Initialization, Core Development, Optimization & Delivery) |
-
----
-
-### Team Roles and Responsibilities
-
-| Role | Responsibilities |
-|------|------------------|
-| **Product Owner** | Defined and prioritized features in the Product Backlog, aligned sprint goals with client and rubric requirements, and ensured value delivery. |
-| **Scrum Master** | Facilitated Scrum ceremonies, removed impediments, and ensured adherence to Agile principles and continuous improvement. |
-| **Developers (Full Stack)** | Designed, implemented, and tested core system features including authentication, AI assistant, and reminder modules. |
-| **Developers (Frontend)** | Implemented UI components, integrated API endpoints, and handled user interaction flows using React and Ant Design. |
-| **Developers (Backend)** | Managed database schema (Prisma), API logic (Express), and real-time communication (Socket.IO). |
-| **QA & Documentation Support** | Conducted integration testing, maintained documentation, and verified sprint acceptance criteria. |
-
-<br />
-
-### Sprint Summary
-
-#### **Sprint 1 — Initialization & Setup**
-**Objective:** Establish the development environment and foundational project structure.  
-**Key Deliverables:**
-- Initialized GitHub repository and project folder hierarchy  
-- Set up JIRA backlog, defined epics, and created user stories  
-- Configured CI/CD automation scripts and initial `.env` templates  
-- Implemented base architecture for frontend (Vite + React) and backend (Express + Prisma)  
-
-**Acceptance Criteria:**  
-- Repository functional and synchronized across all members  
-- JIRA board reflects complete backlog with prioritization  
-- Environment setup verified through successful local builds  
-
-
-#### **Sprint 2 — Core Development**
-**Objective:** Deliver the primary functional modules.  
-
-**Key Deliverables:**
-- Completed **user authentication**, **AI health assistant**, and **smart reminder** systems  
-- Developed **RESTful APIs** for medication, reminders, and blood sugar data  
-- Integrated **Socket.IO** for real-time updates  
-- Implemented responsive **frontend dashboards** and UI layouts  
-- Conducted mid-sprint code review and unit testing  
-
-**Acceptance Criteria:**  
-- Core modules operate across backend and frontend without major issues  
-- AI assistant responds correctly to basic health queries  
-- Reminder system triggers notifications successfully  
-- Mid-sprint retrospective completed with action points recorded  
-
-
-#### **Sprint 3 — Optimization & Delivery**
-**Objective:** Optimize the platform and finalize for submission.  
-**Key Deliverables:**
-- Conducted **integration and regression testing**  
-- Enhanced UI consistency and error handling  
-- Finalized database seeding scripts for demo users  
-- Updated technical documentation and prepared ZIP deliverables  
-- Conducted final retrospective and demo rehearsal  
-
-**Acceptance Criteria:**  
-- Stable build passes all functional test cases  
-- Demo runs successfully in local and CI environments  
-- Retrospective outcomes applied for post-submission improvement  
-
-
-### Agile Artifacts and Workflow
-
-| Artifact | Description |
-|-----------|-------------|
-| **Product Backlog** | Centralized list of all desired features including AI modules, reminders, dashboards, and integrations; managed via JIRA with prioritization labels. |
-| **Sprint Backlog** | Subset of product backlog selected for each sprint, tracked with user stories and story points. |
-| **Burndown Chart** | Visualized sprint progress and velocity using JIRA analytics dashboards. |
-| **Retrospective Notes** | Captured insights and lessons from each sprint following Kerth’s Prime Directive. |
-| **Definition of Done (DoD)** | A feature was considered done when it passed code review, unit tests, and integration verification. |
-| **Feedback Loop** | Continuous communication across JIRA, GitHub commits, and daily WeChat syncs ensured transparency and quick issue resolution. |
-
-
-
-
-
-
----
-
 ## Configuration
 
 ### Environment Variables
@@ -457,7 +361,7 @@ GOOGLE_REDIRECT_URI="http://localhost:3001/api/auth/google/callback"
 ## Project Structure
 
 ```
-5620-Thu-11-13-Group-120/
+sugarless/
 ├── backend/                    # Backend API server
 │   ├── src/
 │   │   ├── routes/            # API route handlers
@@ -484,6 +388,9 @@ GOOGLE_REDIRECT_URI="http://localhost:3001/api/auth/google/callback"
 │   │   ├── schema.prisma      # Database schema
 │   │   ├── migrations/        # Database migrations
 │   │   └── seed-all.ts        # Database seeding
+│   ├── tests/                  # Deterministic unit and integration tests
+│   ├── evals/intent/           # Intent datasets, runners, and baselines
+│   ├── scripts/                # Backend maintenance scripts
 │   ├── package.json
 │   └── tsconfig.json
 │
@@ -511,10 +418,7 @@ GOOGLE_REDIRECT_URI="http://localhost:3001/api/auth/google/callback"
 │   ├── package.json
 │   └── vite.config.ts
 │
-├── docs/                      # Documentation
-│   ├── guides/
-│   ├── integrations/
-│   └── reports/
+├── docs/                      # Quick start, routing, and project documentation
 │
 ├── scripts/                   # Utility scripts
 ├── docker-compose.yml         # Docker configuration
@@ -622,29 +526,6 @@ Use VS Code with the REST Client extension and open:
 - Google Docs: Lab/meeting notes, team decisions, sprint product backups
 - WeChat: Daily progress sync
 
-### Document Types & Locations
-
-| Document Type         | Description                                         | Tool                        | Update Frequency | Responsible                                   |
-| --------------------- | --------------------------------------------------- | --------------------------- | ---------------- | --------------------------------------------- |
-| Sprint Backlog        | List of tasks for current sprint                    | JIRA                        | Daily            | Yuxin Liao, Yiting Liu                        |
-| README Document       | Project documentation                               | GitHub                      | Per sprint       | Shixing Huang, Zhuoxin Chen, Yiting Liu       |
-| User Stories          | Feature requirements for Initialization               | Google Docs, GitHub         | Per sprint       | Yuxin Liao                                    |
-| Product Backlog       | Feature requirements for iterative refinement & prioritization | Google Docs, JIRA, GitHub | Per sprint       | Yiting Liu                                    |
-| Retrospectives        | Sprint reflection notes                             | GitHub                      | Weekly           | Yuxin Liao, Yiting Liu                        |
-| Source Code           | Application code                                    | GitHub                      | Per commit       | Xiangshan Wang, Shixing Huang                 |
-| Lab/Meeting Notes     | Weekly sync records                                 | Google Docs                 | Weekly           | Yiting Liu                                    |
-| Daily Progress Update | Daily progress update                               | WeChat                      | Daily            | Yiting Liu                                    |
-
-Shortcuts:
-- Team Contributions: `docs/CONTRIBUTIONS.md`
-- Sprint Retrospectives: `docs/Sprint Retrospectives/`
-
-### Access & Permissions
-
-- All team members: Full access to all platforms
-- Teaching Team: JIRA, GitHub (Google Docs if checking needed)
-- Stakeholders: Read access to JIRA board and GitHub
-
 ### Document Workflow
 
 - Discussion & Planning: Google Docs (User Stories, Product Backlog) -> JIRA Backlog (Sprint Backlog)
@@ -674,91 +555,21 @@ Shortcuts:
 - Note: Docker Compose is not included; local dev relies on npm scripts + Prisma
 
 ### New AI Tools or Techniques
-- Gemini-powered health assistant and routes (backend/src/routes/ai.routes.ts)
-- Agent-style modules for domain logic (backend/src/agents/core/BaseAgent.ts, backend/src/agents/DietAgent.ts)
+- Safety-first hybrid intent routing with deterministic fast paths, Gemini semantic parsing, Zod validation, and multi-turn slot completion
+- Versioned intent evaluation with frozen holdouts, safety metrics, latency tracking, and model-token accounting
+- Agent-style modules for diet planning and recommendation domain logic
 - Real-time reminders and chat using Socket.IO (backend/src/server.ts, backend/src/services/reminderScheduler.ts)
-
----
-
-## Troubleshooting
-
-### Port Already in Use
-
-```bash
-# Windows (PowerShell)
-Get-Process -Id (Get-NetTCPConnection -LocalPort 3001).OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force
-Get-Process -Id (Get-NetTCPConnection -LocalPort 5173).OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force
-
-# macOS/Linux
-lsof -ti:3001 | xargs kill -9 || true
-lsof -ti:5173 | xargs kill -9 || true
-```
-
-### Database Errors
-
-```bash
-cd backend
-npx prisma migrate reset
-npx prisma db seed
-```
-
-### Prisma Client Errors
-
-```bash
-cd backend
-npx prisma generate
-```
-
-### Dependency Issues
-
-```bash
-rm -rf node_modules package-lock.json
-rm -rf backend/node_modules backend/package-lock.json
-rm -rf frontend/node_modules frontend/package-lock.json
-npm run install:all
-```
-
-### Environment Variables Not Loading
-
-Make sure your `.env` file is in the `backend` directory and contains all required variables.
-
----
-
-## Contributing
-
-We welcome contributions from all team members during the 3-week development period.
-
-Please follow these simple steps:
-
-1. Pull the latest code from `main`.
-2. Make your changes directly on `main`.
-3. Write clear commit messages describing what you changed.
-4. Run and test your changes locally before pushing.
-5. Push to `main` and notify teammates on Slack/JIRA.
-
-### Code Style Guidelines
-
-- Use TypeScript for all new code.
-- Follow existing file structure and naming conventions.
-- Add comments for non-trivial logic.
-- Keep commits small and meaningful.
-- Ensure the project still runs without errors before pushing.
-
-### Notes
-
-Since this is a short course project with three sprints, we skip branch management and PR reviews to save time. Please still communicate before making major changes.
 
 ---
 
 ## License
 
-This repository is for academic coursework (ELEC5620) only and not intended for open-source distribution.
-
----
-
-## Team
-
-**5620-Thu-11-13-Group-120**
+This repository originated as a course project created by
+**our team (G1ori0u_S, Leslie, Shixing, Xiangshan, et)** and has since been independently maintained and
+substantially extended by the repository owner. Sincere thanks to every member
+of the original course team for their shared effort. The project is provided for
+educational and portfolio purposes; no separate open-source license is granted
+unless explicitly stated.
 
 ---
 
@@ -775,7 +586,7 @@ This repository is for academic coursework (ELEC5620) only and not intended for 
 
 ### Built with love for Diabetes Patients and Caregivers
 
-**Start contributing today and help improve diabetes care!**
+**Supporting safer and more accessible diabetes care.**
 
 [Documentation](./docs/)
 
