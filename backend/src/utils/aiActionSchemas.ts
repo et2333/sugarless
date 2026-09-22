@@ -48,6 +48,16 @@ const schemas = {
   generate_meal_plan: mealPlanActionSchema,
 };
 
+export const structuredIntentResponseSchema = z.object({
+  response: z.string().min(1),
+  intent: z.enum(['record_glucose', 'create_reminder', 'generate_meal_plan', 'general_advice', 'emergency_alert']),
+  speechAct: z.enum(['execute', 'query', 'modify', 'cancel', 'confirm']).default('execute'),
+  confidence: z.number().min(0).max(1),
+  slots: z.record(z.unknown()).default({}),
+  missingSlots: z.array(z.string()).default([]),
+  suggestions: z.array(z.string()).default([]),
+});
+
 export type ExecutableActionType = keyof typeof schemas;
 
 export function validateActionData(type: string, data: unknown): Record<string, unknown> {
@@ -56,4 +66,10 @@ export function validateActionData(type: string, data: unknown): Record<string, 
     throw new Error(`Unsupported executable action: ${type}`);
   }
   return schema.parse(data) as Record<string, unknown>;
+}
+
+export function safeValidateActionData(type: string, data: unknown) {
+  const schema = schemas[type as ExecutableActionType];
+  if (!schema) return { success: false as const, error: new Error(`Unsupported executable action: ${type}`) };
+  return schema.safeParse(data);
 }

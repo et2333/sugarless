@@ -15,9 +15,11 @@ export function normalizeScheduleTime(raw: unknown, sourceMessage = ''): string 
   const hm = raw.trim().match(/^(\d{1,2}):(\d{2})$/);
   if (hm) {
     let hour = parseInt(hm[1], 10);
-    const hasPmContext = /\bpm\b|tonight|evening|afternoon|下午|晚上|今晚/i.test(sourceMessage);
+    const hasPmContext = /\bpm\b|tonight|evening|afternoon|下午|傍晚|晚上|今晚|睡前|午饭后|午餐后/i.test(sourceMessage);
+    const hasNoonContext = /\bnoon\b|中午/i.test(sourceMessage);
     const hasAmContext = /\bam\b|morning|早上|上午|清晨/i.test(sourceMessage);
     if (hasPmContext && hour >= 1 && hour <= 11) hour += 12;
+    if (hasNoonContext && hour >= 1 && hour <= 5) hour += 12;
     if (hasAmContext && hour === 12) hour = 0;
     return `${String(hour).padStart(2, '0')}:${hm[2]}`;
   }
@@ -32,9 +34,11 @@ export function normalizeGlucoseType(raw: unknown): string | undefined {
     post_lunch: 'post_prandial',
     post_dinner: 'post_prandial',
     post_meal: 'post_prandial',
+    post_breakfast: 'post_prandial',
     postprandial: 'post_prandial',
     pre_meal: 'fasting',
     before_meal: 'fasting',
+    before_food: 'fasting',
     bedtime: 'random',
     空腹: 'fasting',
     空腹血糖: 'fasting',

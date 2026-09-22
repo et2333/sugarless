@@ -9,8 +9,9 @@ import { authenticate, AuthRequest } from '../middleware/auth';
 import { AppError } from '../middleware/errorHandler';
 import { ChatService } from '../services/ai/chatService';
 import prisma from '../utils/prisma';
-import { detectLanguage, getEmergencyResponse, detectEmergency } from '../utils/languageDetector';
+import { detectLanguage } from '../utils/languageDetector';
 import { validateActionData } from '../utils/aiActionSchemas';
+import { MealPlanExecutionService } from '../services/ai/mealPlanExecutionService';
 
 const router = Router();
 
@@ -40,34 +41,22 @@ router.post('/chat', async (req: AuthRequest, res) => {
     const userId = req.user!.userId;
 
     let processedMessage = message;
+    const requestLanguage = String(req.headers['accept-language'] || 'en')
+      .toLowerCase()
+      .startsWith('zh') ? 'zh' : 'en';
 
     // 如果是语音消息，先转换为文字
     if (isAudio && audioUrl) {
       try {
-        processedMessage = await ChatService.transcribeAudio(audioUrl);
+        processedMessage = await ChatService.transcribeAudio(audioUrl, requestLanguage);
       } catch (error) {
         console.error('语音转文字失败:', error);
         throw new AppError('语音识别失败，请重试', 400, 'TRANSCRIPTION_ERROR');
       }
     }
 
-    // 检测紧急情况（支持多语言）
+    // 语言用于本地化业务执行结果；风险识别统一由 ChatService 编排。
     const detectedLang = detectLanguage(processedMessage);
-    const isEmergency = detectEmergency(processedMessage, detectedLang);
-    
-    if (isEmergency) {
-      const emergencyResponse = getEmergencyResponse(detectedLang);
-      return res.json({
-        success: true,
-        data: {
-          response: emergencyResponse.response,
-          isEmergency: true,
-          originalMessage: processedMessage,
-          suggestions: emergencyResponse.suggestions
-        },
-        message: detectedLang === 'zh' ? '紧急情况检测' : 'Emergency Detected',
-      });
-    }
 
     // 进行AI对话
     let result;
@@ -293,15 +282,45 @@ router.post('/chat', async (req: AuthRequest, res) => {
           break;
 
         case 'generate_meal_plan':
-          // 这里可以实现自动生成膳食计划的逻辑
+          try {
+            const mealPlanData = validateActionData('generate_meal_plan', result.action.data);
+            const generated = await MealPlanExecutionService.generateAndSave(
+              userId,
+              Number(mealPlanData.days),
+              String(mealPlanData.preferences || ''),
+            );
+            actionResult = {
+              mealPlan: generated.mealPlan,
+              plan: generated.plan,
+              message: detectedLang === 'zh' ? `${mealPlanData.days}天餐单已生成 ✓` : `${mealPlanData.days}-day meal plan created ✓`,
+            };
+          } catch (error: any) {
+            console.error('自动生成餐单失败:', error);
+            actionResult = { error: detectedLang === 'zh' ? `生成餐单失败: ${error.message}` : `Failed to create meal plan: ${error.message}` };
+          }
+          break;
+
+        case 'emergency_alert':
+          actionResult = { emergency: true, risk: result.risk };
           break;
       }
     }
 
+    const finalResponse = actionResult?.message || actionResult?.error || result.response;
+    const executionStatus = result.action?.type === 'emergency_alert'
+      ? 'safety_blocked'
+      : actionResult?.error
+        ? 'failed'
+        : actionResult
+          ? 'succeeded'
+          : result.requiresClarification
+            ? 'pending'
+            : 'not_requested';
+
     // 保存对话记录
     try {
       await ChatService.saveChatMessage(userId, 'user', processedMessage);
-      await ChatService.saveChatMessage(userId, 'assistant', result.response);
+      await ChatService.saveChatMessage(userId, 'assistant', finalResponse);
     } catch (saveError) {
       console.error('保存对话记录失败:', saveError);
     }
@@ -309,11 +328,18 @@ router.post('/chat', async (req: AuthRequest, res) => {
     res.json({
       success: true,
       data: {
-        response: result.response,
+        response: finalResponse,
         originalMessage: processedMessage,
         isAudio: isAudio || false,
-        isEmergency: false, // 添加 isEmergency 字段
+        isEmergency: result.action?.type === 'emergency_alert',
         actionResult,
+        executionStatus,
+        intent: result.intent,
+        confidence: result.confidence,
+        routingSource: result.routingSource,
+        requiresClarification: result.requiresClarification || false,
+        missingSlots: result.missingSlots || [],
+        risk: result.risk,
         suggestions: result.suggestions || [],
         quickReplies: ChatService.getQuickReplies(),
       },
@@ -436,12 +462,16 @@ router.post('/transcribe', async (req: AuthRequest, res) => {
       audioUrl: z.string().url('需要提供有效的音频URL'),
     }).parse(req.body);
 
-    const transcribedText = await ChatService.transcribeAudio(audioUrl);
+    const requestLanguage = String(req.headers['accept-language'] || 'en')
+      .toLowerCase()
+      .startsWith('zh') ? 'zh' : 'en';
+    const transcribedText = await ChatService.transcribeAudio(audioUrl, requestLanguage);
 
     res.json({
       success: true,
       data: {
         text: transcribedText,
+        language: requestLanguage,
       },
       message: '语音识别成功',
     });
