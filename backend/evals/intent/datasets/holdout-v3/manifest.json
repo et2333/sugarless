@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "intent-holdout-v3-300",
+  "status": "scored_first_run_complete",
+  "evaluationRole": "independent_holdout_do_not_tune_on_results",
+  "createdAt": "2026-09-21T15:52:08.017Z",
+  "assumptions": [
+    "Empty evaluation-user context",
+    "Text input only",
+    "No routing or model execution during dataset construction"
+  ],
+  "total": 300,
+  "sha256": "02d86fbc6e9c0ebea251eaf23865ff672dbfec1627873ddb6ee1c9844727fe52",
+  "distributions": {
+    "expectedIntent": {
+      "create_reminder": 60,
+      "emergency_alert": 60,
+      "general_advice": 60,
+      "generate_meal_plan": 60,
+      "record_glucose": 60
+    },
+    "language": {
+      "en": 150,
+      "zh": 150
+    },
+    "expectedMode": {
+      "clarify": 32,
+      "emergency": 60,
+      "execute": 148,
+      "respond": 60
+    },
+    "intentLanguage": {
+      "create_reminder": {
+        "zh": 30,
+        "en": 30
+      },
+      "emergency_alert": {
+        "zh": 30,
+        "en": 30
+      },
+      "general_advice": {
+        "zh": 30,
+        "en": 30
+      },
+      "generate_meal_plan": {
+        "zh": 30,
+        "en": 30
+      },
+      "record_glucose": {
+        "zh": 30,
+        "en": 30
+      }
+    }
+  },
+  "validation": {
+    "uniqueIds": true,
+    "uniqueInputs": true,
+    "priorExactInputOverlapCount": 0,
+    "priorSources": [
+      "intent-eval-cases.json",
+      "intent-eval-holdout-cases.json",
+      "intent-eval-final-cases.json",
+      "holdout-v2/cases.json"
+    ],
+    "scored": true
+  },
+  "firstScoredRun": {
+    "id": "2026-09-21T15-52-48-235Z",
+    "finishedAt": "2026-09-21T16:03:54.300Z",
+    "report": "baselines/holdout-v3/2026-09-21T15-52-48-235Z.json",
+    "reportSha256": "e9c161ff64e47f606d12a78f24153bacec192fd7c44371199e0af46f3fb58279",
+    "implementationSha256": "51879053810005e5bf7b18f4db27f2bb3c0cdc889fbb1875ce85350366c64b78",
+    "scorerSha256": "5ae81b92596d0250dd96d021f87bac014574ff9c062f5c2dc7a252ff8b98da0b",
+    "overallPassRate": 0.966667,
+    "intentAccuracy": 1,
+    "modeAccuracy": 0.996667
+  }
+}

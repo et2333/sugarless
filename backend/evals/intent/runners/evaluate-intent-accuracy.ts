@@ -3,7 +3,7 @@
  *
  * 用法:
  *   cd backend
- *   npx tsx scripts/evaluate-intent-accuracy.ts
+ *   npm run eval:intent
  *
  * 可选环境变量（写在 backend/.env）:
  *   HTTPS_PROXY=http://127.0.0.1:7897
@@ -13,11 +13,11 @@
  */
 
 // 必须最先加载，确保 Gemini SDK 的 fetch 走代理
-import '../src/utils/setupProxy';
+import '../../../src/utils/setupProxy';
 
 import fs from 'fs';
 import path from 'path';
-import { detectEmergency, detectLanguage } from '../src/utils/languageDetector';
+import { detectEmergency, detectLanguage } from '../../../src/utils/languageDetector';
 
 const proxyUrl = process.env.HTTPS_PROXY || process.env.HTTP_PROXY;
 if (proxyUrl) {
@@ -58,9 +58,10 @@ interface EvalResult {
   latencyMs: number;
 }
 
-const CASES_PATH = path.join(
-  __dirname,
-  process.env.EVAL_CASES_FILE || 'intent-eval-cases.json'
+const EVAL_ROOT = path.resolve(__dirname, '..');
+const CASES_PATH = path.resolve(
+  EVAL_ROOT,
+  process.env.EVAL_CASES_FILE || 'datasets/historical/intent-eval-cases.json'
 );
 const DELAY_MS = parseInt(process.env.EVAL_DELAY_MS || '1500', 10);
 const EVAL_USER_ID = process.env.EVAL_USER_ID || 'intent-eval-user';
@@ -235,7 +236,7 @@ async function main() {
     console.warn('⚠️  未检测到 GEMINI_API_KEY，将使用 chatService 内置 fallback key');
   }
 
-  const { ChatService } = await import('../src/services/ai/chatService');
+  const { ChatService } = await import('../../../src/services/ai/chatService');
   const healthChat = ChatService.healthChat.bind(ChatService);
 
   const cases: EvalCase[] = JSON.parse(fs.readFileSync(CASES_PATH, 'utf-8'));
@@ -258,10 +259,11 @@ async function main() {
 
   printSummary(results);
 
-  const reportPath = path.join(
-    __dirname,
-    process.env.EVAL_REPORT_FILE || 'intent-eval-report.json'
+  const reportPath = path.resolve(
+    EVAL_ROOT,
+    process.env.EVAL_REPORT_FILE || 'results/legacy/intent-eval-report.json'
   );
+  fs.mkdirSync(path.dirname(reportPath), { recursive: true });
   fs.writeFileSync(reportPath, JSON.stringify({ generatedAt: new Date().toISOString(), results }, null, 2));
   console.log(`\n详细报告已保存: ${reportPath}`);
 }

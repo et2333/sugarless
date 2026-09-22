@@ -1,0 +1,47 @@
+[
+  { "id": "glucose-01", "input": "把今早空腹测的102 mg/dL记下来", "expectedIntent": "record_glucose", "expectedFields": { "value": 102, "unit": "mg/dL", "type": "fasting" } },
+  { "id": "glucose-02", "input": "晚饭后量到8.1，帮我记到血糖记录", "expectedIntent": "record_glucose", "expectedFields": { "value": 8.1, "unit": "mmol/L", "type": "post_prandial" } },
+  { "id": "glucose-03", "input": "Log my random glucose at 126 mg/dL", "expectedIntent": "record_glucose", "expectedFields": { "value": 126, "unit": "mg/dL", "type": "random" } },
+  { "id": "glucose-04", "input": "Please save my post-meal glucose reading, 7.8 mmol/L", "expectedIntent": "record_glucose", "expectedFields": { "value": 7.8, "unit": "mmol/L", "type": "post_prandial" } },
+  { "id": "glucose-05", "input": "刚测血糖6.4，帮我保存", "expectedIntent": "record_glucose", "expectedFields": { "value": 6.4, "unit": "mmol/L" } },
+  { "id": "glucose-06", "input": "添加一条血糖记录：5.9 mmol/L", "expectedIntent": "record_glucose", "expectedFields": { "value": 5.9, "unit": "mmol/L" } },
+  { "id": "glucose-07", "input": "Could you record my fasting blood glucose of 95 mg/dL?", "expectedIntent": "record_glucose", "expectedFields": { "value": 95, "type": "fasting" } },
+  { "id": "glucose-08", "input": "睡前量了7.1 mmol/L，记录到血糖里", "expectedIntent": "record_glucose", "expectedFields": { "value": 7.1, "unit": "mmol/L" } },
+
+  { "id": "reminder-01", "input": "明天下午两点提醒复诊", "expectedIntent": "create_reminder", "expectedFields": { "scheduleTime": "14:00", "scheduleType": "once" } },
+  { "id": "reminder-02", "input": "晚上十点一刻提醒我打胰岛素", "expectedIntent": "create_reminder", "expectedFields": { "scheduleTime": "22:15", "type": "medication" } },
+  { "id": "reminder-03", "input": "每天早晨六点半叫我测空腹血糖", "expectedIntent": "create_reminder", "expectedFields": { "scheduleTime": "06:30", "scheduleType": "daily" } },
+  { "id": "reminder-04", "input": "At quarter past six each evening, remind me to go for a walk", "expectedIntent": "create_reminder", "expectedFields": { "scheduleTime": "18:15", "type": "exercise" } },
+  { "id": "reminder-05", "input": "Set a daily reminder to take Metformin at 8:45 PM", "expectedIntent": "create_reminder", "expectedFields": { "scheduleTime": "20:45", "scheduleType": "daily" } },
+  { "id": "reminder-06", "input": "今晚9:30提醒我测血糖", "expectedIntent": "create_reminder", "expectedFields": { "scheduleTime": "21:30", "type": "glucose_check" } },
+  { "id": "reminder-07", "input": "每周一早上七点提醒我运动", "expectedIntent": "create_reminder", "expectedFields": { "scheduleTime": "07:00", "scheduleType": "weekly" } },
+  { "id": "reminder-08", "input": "Remind me to review my glucose log at noon tomorrow", "expectedIntent": "create_reminder", "expectedFields": { "scheduleTime": "12:00" } },
+
+  { "id": "meal-01", "input": "按低GI原则安排未来五天的三餐", "expectedIntent": "generate_meal_plan", "expectedFields": { "days": 5 } },
+  { "id": "meal-02", "input": "制定一周控糖餐单", "expectedIntent": "generate_meal_plan", "expectedFields": { "days": 7 } },
+  { "id": "meal-03", "input": "给我生成三天的低碳膳食计划", "expectedIntent": "generate_meal_plan", "expectedFields": { "days": 3 } },
+  { "id": "meal-04", "input": "Create a 7-day diabetes meal plan", "expectedIntent": "generate_meal_plan", "expectedFields": { "days": 7 } },
+  { "id": "meal-05", "input": "Generate a 2-day diet plan for me", "expectedIntent": "generate_meal_plan", "expectedFields": { "days": 2 } },
+  { "id": "meal-06", "input": "帮我规划一天的一日三餐", "expectedIntent": "generate_meal_plan", "expectedFields": { "days": 1 } },
+  { "id": "meal-07", "input": "安排未来十天的控糖食谱", "expectedIntent": "generate_meal_plan", "expectedFields": { "days": 10 } },
+  { "id": "meal-08", "input": "Make me a weekly meal plan for stable glucose", "expectedIntent": "generate_meal_plan", "expectedFields": { "days": 7 } },
+
+  { "id": "general-01", "input": "介绍一下七天控糖餐单通常包含什么", "expectedIntent": "general_advice" },
+  { "id": "general-02", "input": "Can you explain what a low-carb meal plan means?", "expectedIntent": "general_advice" },
+  { "id": "general-03", "input": "什么是空腹血糖？", "expectedIntent": "general_advice" },
+  { "id": "general-04", "input": "What is the normal blood sugar range?", "expectedIntent": "general_advice" },
+  { "id": "general-05", "input": "如何记录血糖比较规范？", "expectedIntent": "general_advice" },
+  { "id": "general-06", "input": "Should I set a medication reminder?", "expectedIntent": "general_advice" },
+  { "id": "general-07", "input": "低GI食物有哪些？", "expectedIntent": "general_advice" },
+  { "id": "general-08", "input": "Tell me about post-meal glucose", "expectedIntent": "general_advice" },
+
+  { "id": "emergency-01", "input": "帮我记录血糖2.3 mmol/L，我站不稳了", "expectedIntent": "emergency_alert" },
+  { "id": "emergency-02", "input": "My glucose is 2.4 mmol/L and I may pass out", "expectedIntent": "emergency_alert" },
+  { "id": "emergency-03", "input": "血糖28 mmol/L，还在持续呕吐", "expectedIntent": "emergency_alert" },
+  { "id": "emergency-04", "input": "Blood glucose is 420 mg/dL and I keep vomiting", "expectedIntent": "emergency_alert" },
+  { "id": "emergency-05", "input": "打完胰岛素后意识有点不清", "expectedIntent": "emergency_alert" },
+  { "id": "emergency-06", "input": "I have chest pain and cannot breathe", "expectedIntent": "emergency_alert" },
+  { "id": "emergency-07", "input": "救命，我快昏倒了", "expectedIntent": "emergency_alert" },
+  { "id": "emergency-08", "input": "Call 911, this is a medical emergency", "expectedIntent": "emergency_alert" }
+]
+

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "intent-holdout-v2-300",
+  "status": "scored_first_run_complete",
+  "evaluationRole": "independent_holdout_do_not_tune_on_results",
+  "createdAt": "2026-09-21T09:13:43.457Z",
+  "assumptions": [
+    "Empty evaluation-user context",
+    "Text input only",
+    "No routing or model execution during dataset construction"
+  ],
+  "total": 300,
+  "sha256": "8b356199195a0d5dfb5b0353b7b41aba513c6dc7a220580e7b509e4b9e0ba086",
+  "distributions": {
+    "expectedIntent": {
+      "create_reminder": 60,
+      "emergency_alert": 60,
+      "general_advice": 60,
+      "generate_meal_plan": 60,
+      "record_glucose": 60
+    },
+    "language": {
+      "en": 150,
+      "zh": 150
+    },
+    "expectedMode": {
+      "clarify": 32,
+      "emergency": 60,
+      "execute": 148,
+      "respond": 60
+    },
+    "intentLanguage": {
+      "create_reminder": {
+        "zh": 30,
+        "en": 30
+      },
+      "emergency_alert": {
+        "zh": 30,
+        "en": 30
+      },
+      "general_advice": {
+        "zh": 30,
+        "en": 30
+      },
+      "generate_meal_plan": {
+        "zh": 30,
+        "en": 30
+      },
+      "record_glucose": {
+        "zh": 30,
+        "en": 30
+      }
+    }
+  },
+  "validation": {
+    "uniqueIds": true,
+    "uniqueInputs": true,
+    "historicalExactInputOverlapCount": 0,
+    "scored": true
+  },
+  "firstScoredRun": {
+    "id": "2026-09-21T09-21-49-946Z",
+    "finishedAt": "2026-09-21T09:27:26.938Z",
+    "report": "baselines/holdout-v2/2026-09-21T09-21-49-946Z.json",
+    "reportSha256": "3bfcc8d783bee0e2ac8048db6973d5f936b0fa452a87d1ae8577d50a08d07d55",
+    "implementationSha256": "18d61f6f60025da6c34fd3fbef44f122f64ee7b319b1fff178538f9818f7a49f",
+    "scorerSha256": "c632029e507c6f35638b1c137ab9222321c92159ac966d849c2c7e00d5d20ebf",
+    "overallPassRate": 0.776667,
+    "intentAccuracy": 0.903333,
+    "modeAccuracy": 0.866667
+  }
+}

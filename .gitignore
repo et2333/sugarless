@@ -38,6 +38,7 @@ logs/
 # Testing
 coverage/
 .nyc_output/
+backend/evals/intent/results/
 
 # Temporary files
 tmp/

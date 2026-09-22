@@ -1,6 +1,6 @@
 /**
  * 生成 intent-eval-cases.json（120 条标准话术）
- * 用法: npx tsx scripts/generate-intent-eval-cases.ts
+ * 用法: npm run eval:intent:generate
  */
 import fs from 'fs';
 import path from 'path';
@@ -15,6 +15,14 @@ interface EvalCase {
 }
 
 const cases: EvalCase[] = [];
+
+type CaseDefinition = [
+  category: string,
+  input: string,
+  expectedIntent: string,
+  expectedFields?: Record<string, string | number>,
+  note?: string,
+];
 
 function add(
   prefix: string,
@@ -36,7 +44,7 @@ function add(
 }
 
 // record_glucose × 26
-const glucoseCases: Omit<Parameters<typeof add>, 0 | 1>[] = [
+const glucoseCases: CaseDefinition[] = [
   ['record_glucose', "Can you record my fasting blood sugar? It's 110 mg/dL", 'record_glucose', { type: 'fasting', valueMin: 100, valueMax: 120 }],
   ['record_glucose', 'Record my post-meal blood sugar 7.2 mmol/L', 'record_glucose', { type: 'post_prandial', valueMin: 7, valueMax: 8 }],
   ['record_glucose', '帮我记录空腹血糖110', 'record_glucose', { type: 'fasting', valueMin: 100, valueMax: 120 }],
@@ -67,7 +75,7 @@ const glucoseCases: Omit<Parameters<typeof add>, 0 | 1>[] = [
 glucoseCases.forEach((args, i) => add('glucose', i + 1, ...args));
 
 // create_reminder × 26
-const reminderCases: Omit<Parameters<typeof add>, 0 | 1>[] = [
+const reminderCases: CaseDefinition[] = [
   ['create_reminder', 'Remind me to take Metformin at 8 AM daily', 'create_reminder', { scheduleTime: '08:00', scheduleType: 'daily' }],
   ['create_reminder', 'Set a reminder to check blood sugar at 7:30 PM', 'create_reminder', { scheduleTime: '19:30' }],
   ['create_reminder', '每天早上8点提醒我吃二甲双胍', 'create_reminder', { scheduleTime: '08:00', scheduleType: 'daily' }],
@@ -98,7 +106,7 @@ const reminderCases: Omit<Parameters<typeof add>, 0 | 1>[] = [
 reminderCases.forEach((args, i) => add('reminder', i + 1, ...args));
 
 // general_advice × 32（避免易误触发 meal_plan 的表述）
-const adviceCases: Omit<Parameters<typeof add>, 0 | 1 | 3>[] = [
+const adviceCases: CaseDefinition[] = [
   ['general_advice', 'What is the normal blood sugar range?', 'general_advice'],
   ['general_advice', '血糖正常范围是多少？', 'general_advice'],
   ['general_advice', 'Give me exercise advice for diabetes', 'general_advice'],
@@ -135,7 +143,7 @@ const adviceCases: Omit<Parameters<typeof add>, 0 | 1 | 3>[] = [
 adviceCases.forEach((args, i) => add('advice', i + 1, ...args));
 
 // generate_meal_plan × 12
-const mealPlanCases: Omit<Parameters<typeof add>, 0 | 1 | 3>[] = [
+const mealPlanCases: CaseDefinition[] = [
   ['generate_meal_plan', 'Generate a meal plan for me for the next 7 days', 'generate_meal_plan'],
   ['generate_meal_plan', '帮我生成本周低糖餐单', 'generate_meal_plan'],
   ['generate_meal_plan', 'Create a diabetic-friendly meal plan for this week', 'generate_meal_plan'],
@@ -152,7 +160,7 @@ const mealPlanCases: Omit<Parameters<typeof add>, 0 | 1 | 3>[] = [
 mealPlanCases.forEach((args, i) => add('meal', i + 1, ...args));
 
 // emergency_alert × 17（对齐规则引擎关键词）
-const emergencyCases: Omit<Parameters<typeof add>, 0 | 1 | 3>[] = [
+const emergencyCases: CaseDefinition[] = [
   ['emergency_alert', 'I have severe chest pain and difficulty breathing', 'emergency_alert'],
   ['emergency_alert', 'blood sugar below 2, I feel dizzy', 'emergency_alert'],
   ['emergency_alert', '我胸痛呼吸困难，快救命', 'emergency_alert'],
@@ -174,7 +182,7 @@ const emergencyCases: Omit<Parameters<typeof add>, 0 | 1 | 3>[] = [
 emergencyCases.forEach((args, i) => add('emergency', i + 1, ...args));
 
 // 边界/负样本 × 7
-const negativeCases: Omit<Parameters<typeof add>, 0 | 1>[] = [
+const negativeCases: CaseDefinition[] = [
   ['general_advice', 'Remind me to take medicine at 8 AM', 'create_reminder', undefined, '应识别为提醒，不应误判为紧急'],
   ['general_advice', 'Help me set a reminder for blood sugar check at 7 AM', 'create_reminder', { scheduleTime: '07:00' }, '含 help 但不应触发紧急'],
   ['general_advice', 'Can you help me log my blood sugar at 100 mg/dL', 'record_glucose', { valueMin: 95, valueMax: 105 }, '含 help 但应识别为记录血糖'],
@@ -189,6 +197,6 @@ if (cases.length !== 120) {
   throw new Error(`Expected 120 cases, got ${cases.length}`);
 }
 
-const outPath = path.join(__dirname, 'intent-eval-cases.json');
+const outPath = path.resolve(__dirname, '..', 'datasets', 'historical', 'intent-eval-cases.json');
 fs.writeFileSync(outPath, JSON.stringify(cases, null, 2) + '\n');
 console.log(`Generated ${cases.length} cases → ${outPath}`);

@@ -28,13 +28,15 @@ interface ClassMetrics {
 
 const reportFile = process.env.EVAL_REPORT_FILE || 'intent-eval-report.json';
 const summaryPrefix = process.env.EVAL_SUMMARY_PREFIX || 'intent-eval-summary';
-const REPORT_PATH = path.join(__dirname, reportFile);
-const CASES_PATH = path.join(
-  __dirname,
-  process.env.EVAL_CASES_FILE || 'intent-eval-cases.json'
+const EVAL_ROOT = path.resolve(__dirname, '..');
+const RESULTS_DIR = path.join(EVAL_ROOT, 'results', 'legacy');
+const REPORT_PATH = path.resolve(RESULTS_DIR, reportFile);
+const CASES_PATH = path.resolve(
+  EVAL_ROOT,
+  process.env.EVAL_CASES_FILE || 'datasets/historical/intent-eval-cases.json'
 );
-const SUMMARY_JSON_PATH = path.join(__dirname, `${summaryPrefix}.json`);
-const SUMMARY_MD_PATH = path.join(__dirname, `${summaryPrefix}.md`);
+const SUMMARY_JSON_PATH = path.join(RESULTS_DIR, `${summaryPrefix}.json`);
+const SUMMARY_MD_PATH = path.join(RESULTS_DIR, `${summaryPrefix}.md`);
 
 function round(value: number, digits = 2): number {
   return Number(value.toFixed(digits));
@@ -116,6 +118,7 @@ function calculateClassMetrics(results: EvalResult[]): ClassMetrics[] {
 }
 
 function main() {
+  fs.mkdirSync(RESULTS_DIR, { recursive: true });
   const raw = fs.readFileSync(REPORT_PATH, 'utf8');
   const casesRaw = fs.readFileSync(CASES_PATH, 'utf8');
   const results = parseResults(raw);

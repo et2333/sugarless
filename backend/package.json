@@ -16,11 +16,22 @@
     "db:reset": "prisma migrate reset --force",
     "db:studio": "prisma studio",
     "db:init": "npm run db:generate && npm run db:migrate && npm run db:seed",
-    "eval:intent": "tsx scripts/evaluate-intent-accuracy.ts",
-    "eval:intent:holdout": "tsx scripts/evaluate-intent-accuracy.ts",
-    "eval:intent:summarize": "tsx scripts/summarize-intent-eval.ts",
-    "test:intent-router": "tsx scripts/test-intent-router.ts",
-    "eval:intent:generate": "tsx scripts/generate-intent-eval-cases.ts"
+    "test:intent": "npm run test:intent-router && npm run test:intent-orchestrator",
+    "test:intent-router": "tsx tests/unit/intent-router.test.ts",
+    "test:intent-orchestrator": "tsx tests/integration/intent-orchestrator.test.ts",
+    "test:typecheck": "tsc -p tsconfig.test.json",
+    "eval:typecheck": "tsc -p tsconfig.evals.json",
+    "eval:intent": "tsx evals/intent/runners/evaluate-intent-accuracy.ts",
+    "eval:intent:holdout": "tsx evals/intent/runners/evaluate-intent-accuracy.ts",
+    "eval:intent:summarize": "tsx evals/intent/runners/summarize-intent-eval.ts",
+    "eval:intent:generate": "tsx evals/intent/builders/generate-intent-eval-cases.ts",
+    "eval:intent:frozen": "tsx evals/intent/runners/evaluate-intent-frozen.ts",
+    "eval:intent:history": "tsx evals/intent/runners/evaluate-intent-history.ts",
+    "eval:intent:holdout:v2:build": "tsx evals/intent/builders/build-intent-eval-holdout-v2.ts",
+    "eval:intent:holdout:v2": "tsx evals/intent/runners/evaluate-intent-holdout-v2.ts",
+    "eval:intent:holdout:v2:postfix": "tsx evals/intent/runners/evaluate-intent-holdout-v2-postfix.ts",
+    "eval:intent:holdout:v3:build": "tsx evals/intent/builders/build-intent-eval-holdout-v3.ts",
+    "eval:intent:holdout:v3": "tsx evals/intent/runners/evaluate-intent-holdout-v3.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed-all.ts"
