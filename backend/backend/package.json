@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "diabetes-platform-backend": "file:..",
-    "socket.io": "^4.8.1"
-  }
-}
